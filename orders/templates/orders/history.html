@@ -1,0 +1,67 @@
+{% extends 'core/base.html' %}
+
+{% block title %}My Orders - UzhavarHub{% endblock title %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="d-flex align-items-center mb-5">
+        <span class="fs-1 me-3">📦</span>
+        <h2 class="fw-bold text-dark mb-0">My Order History</h2>
+    </div>
+
+    {% if orders %}
+        <div class="row g-4">
+            {% for order in orders %}
+            <div class="col-12">
+                <div class="card border-0 shadow-sm rounded-4 mb-3">
+                    <div class="card-header bg-white border-bottom-0 pt-4 pb-0 px-4 d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="text-muted small">ORDER ID</span>
+                            <h6 class="fw-bold mb-0">#{{ order.id }}</h6>
+                        </div>
+                        <div>
+                            <span class="text-muted small">DATE</span>
+                            <h6 class="fw-bold mb-0">{{ order.created_at|date:"M d, Y" }}</h6>
+                        </div>
+                        <div>
+                            <span class="text-muted small">TOTAL</span>
+                            <h6 class="fw-bold text-success mb-0">₹{{ order.total_amount }}</h6>
+                        </div>
+                        <div>
+                            <span class="badge {% if order.status == 'COMPLETED' %}bg-success{% elif order.status == 'PLACED' %}bg-primary{% else %}bg-warning text-dark{% endif %} px-3 py-2 rounded-pill">
+                                {{ order.status }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card-body p-4">
+                        <hr class="text-muted mb-4">
+                        <div class="row g-3">
+                            {% for item in order.items.all %}
+                            <div class="col-md-6 col-lg-4">
+                                <div class="d-flex align-items-center gap-3 p-3 bg-light rounded-3">
+                                    <div class="bg-white rounded d-flex align-items-center justify-content-center shadow-sm" style="width: 50px; height: 50px;">
+                                        <span class="fs-4">🌾</span>
+                                    </div>
+                                    <div>
+                                        <h6 class="fw-bold mb-1">{{ item.product.name }}</h6>
+                                        <small class="text-muted">{{ item.quantity }} {{ item.product.unit }} • ₹{{ item.price_at_purchase }}</small>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center py-5">
+            <span class="display-1 text-muted">📭</span>
+            <h3 class="fw-bold text-muted mt-3">No orders yet</h3>
+            <p class="text-muted mb-4">You haven't placed any orders. Start exploring fresh produce!</p>
+            <a href="{% url 'marketplace:product_list' %}" class="btn btn-success rounded-pill px-4 fw-medium">Shop Now</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock content %}

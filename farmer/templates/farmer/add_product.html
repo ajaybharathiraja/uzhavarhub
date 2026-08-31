@@ -1,0 +1,35 @@
+{% extends 'farmer/farmer_base.html' %}
+
+{% block farmer_content %}
+<div class="mb-4">
+    <a href="{% url 'farmer:product_list' %}" class="text-success text-decoration-none fw-medium">&larr; Back to Products</a>
+</div>
+
+<div class="card border-0 shadow-sm rounded-4" style="max-width: 800px;">
+    <div class="card-body p-5">
+        <h3 class="fw-bold text-dark mb-4">Add New Product</h3>
+        
+        <form method="post">
+            {% csrf_token %}
+            <div class="row g-3">
+                {% for field in form %}
+                    <div class="col-md-6 {% if field.name == 'description' %}col-md-12{% endif %} mb-3">
+                        <label class="form-label fw-semibold text-dark">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.help_text %}
+                            <div class="form-text small">{{ field.help_text }}</div>
+                        {% endif %}
+                        {% if field.errors %}
+                            <div class="text-danger mt-1 small">{{ field.errors }}</div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+            
+            <div class="d-flex justify-content-end mt-4">
+                <button type="submit" class="btn btn-success btn-lg fw-bold rounded-3 px-5 shadow-sm">Save Product</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock farmer_content %}

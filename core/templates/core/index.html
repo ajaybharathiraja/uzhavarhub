@@ -1,0 +1,63 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<section class="hero-section text-center d-flex align-items-center justify-content-center">
+    <div class="container">
+        <h1 class="display-3 fw-black text-success mb-4 hero-title">Fresh From Farm to Your Table</h1>
+        <p class="lead text-success-emphasis mx-auto mb-5 hero-subtitle">
+            UzhavarHub connects you directly with local farmers. Get fresh, sustainable<br>
+            produce at the best prices, while supporting the agricultural community.
+        </p>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="#" class="btn btn-success btn-lg px-5 py-3 rounded-2 fw-semibold">Shop Now</a>
+            <a href="#" class="btn btn-outline-success btn-lg px-5 py-3 rounded-2 fw-semibold bg-white">Join as Farmer</a>
+        </div>
+    </div>
+</section>
+
+    <!-- Trending Section -->
+    <section class="py-5 bg-light">
+        <div class="container py-4">
+            <div class="text-center mb-5">
+                <h2 class="fw-black text-success display-6">Trending Now 📈</h2>
+                <p class="text-muted lead">AI-Powered insights showing the fastest moving farm produce this week.</p>
+            </div>
+            
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+                {% for product in trending_products %}
+                <div class="col">
+                    <div class="card border-0 shadow-sm rounded-4 h-100">
+                    <a href="{% url 'marketplace:product_detail' product.slug %}" class="text-decoration-none">
+                        <div class="bg-light d-flex align-items-center justify-content-center rounded-top-4" style="height: 200px;">
+                            <span class="display-1">🌾</span>
+                        </div>
+                    </a>
+                    <div class="card-body p-4">
+                        <span class="badge bg-success bg-opacity-10 text-success fw-bold mb-2">{{ product.category.name }}</span>
+                        <a href="{% url 'marketplace:product_detail' product.slug %}" class="text-decoration-none text-dark">
+                            <h5 class="card-title fw-bold mb-1 text-truncate">{{ product.name }}</h5>
+                        </a>
+                        <p class="text-muted small mb-3">From {{ product.farmer.farmer_profile.farm_name|default:product.farmer.username }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="fs-5 fw-black text-success">₹{{ product.price }}/{{ product.unit }}</span>
+                                <a href="{% url 'orders:add_to_cart' product.id %}" class="btn btn-sm btn-success rounded-pill fw-medium px-3 add-to-cart-btn">Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12 text-center">
+                    <p class="text-muted">Not enough sales data to determine trends yet.</p>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <div class="text-center mt-5">
+                <a href="{% url 'marketplace:product_list' %}" class="btn btn-outline-success btn-lg rounded-pill fw-medium px-5">View All Products</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="py-5">
+{% endblock content %}

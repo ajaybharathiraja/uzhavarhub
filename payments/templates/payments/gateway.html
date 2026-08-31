@@ -1,0 +1,59 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Secure Payment - UzhavarHub{% endblock title %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="bg-dark text-white p-4 text-center">
+                    <span class="fs-1">🔒</span>
+                    <h3 class="fw-bold mt-2">Secure Payment Gateway</h3>
+                    <p class="mb-0 text-white-50">Test Mode Simulation</p>
+                </div>
+                
+                <div class="card-body p-4 p-md-5">
+                    <div class="d-flex justify-content-between mb-4 pb-3 border-bottom">
+                        <span class="text-muted">Paying for Order:</span>
+                        <span class="fw-bold">#{{ order.id }}</span>
+                    </div>
+                    
+                    <div class="text-center mb-5">
+                        <span class="text-muted d-block mb-1">Amount Due</span>
+                        <h1 class="display-4 fw-black text-success mb-0">₹{{ order.total_amount }}</h1>
+                    </div>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-4">
+                            <label class="form-label text-muted small fw-bold">CARD NUMBER</label>
+                            <input type="text" class="form-control form-control-lg bg-light border-0" value="•••• •••• •••• 4242" disabled>
+                        </div>
+                        
+                        <div class="row mb-4">
+                            <div class="col-6">
+                                <label class="form-label text-muted small fw-bold">EXPIRY</label>
+                                <input type="text" class="form-control form-control-lg bg-light border-0" value="12/28" disabled>
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label text-muted small fw-bold">CVC</label>
+                                <input type="text" class="form-control form-control-lg bg-light border-0" value="***" disabled>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-success btn-lg w-100 rounded-pill fw-bold shadow-sm d-flex align-items-center justify-content-center gap-2">
+                            <span>Pay ₹{{ order.total_amount }}</span>
+                            <span class="fs-5">→</span>
+                        </button>
+                    </form>
+                    
+                    <p class="text-center text-muted small mt-4 mb-0">
+                        <span class="fw-bold">Note:</span> This is a sandbox environment. Clicking pay will instantly simulate a successful transaction and calculate commissions.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

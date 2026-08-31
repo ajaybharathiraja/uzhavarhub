@@ -1,0 +1,46 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Sign up - UzhavarHub{% endblock title %}
+
+{% block navbar %}{% endblock navbar %}
+{% block footer %}{% endblock footer %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow border-0 rounded-4" style="background-color: #ffffff;">
+                <div class="card-body p-5">
+                    <div class="text-center mb-4">
+                        <h2 class="text-success fw-black mb-2">Join UzhavarHub</h2>
+                        <p class="text-muted">Create your account to get started</p>
+                    </div>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold text-dark">{{ field.label }}</label>
+                                {{ field }}
+                                {% if field.help_text %}
+                                    <div class="form-text text-muted small mt-1">{{ field.help_text }}</div>
+                                {% endif %}
+                                {% if field.errors %}
+                                    <div class="text-danger mt-1 small fw-medium">{{ field.errors }}</div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                        
+                        <div class="d-grid mt-5">
+                            <button type="submit" class="btn btn-success btn-lg fw-bold rounded-3 shadow-sm">Create Account</button>
+                        </div>
+                    </form>
+                    <div class="text-center mt-4 pt-3 border-top">
+                        <p class="text-muted mb-0">Already have an account? <a href="{% url 'accounts:login' %}" class="text-success text-decoration-none fw-bold">Login here</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

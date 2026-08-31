@@ -1,0 +1,90 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Your Cart - UzhavarHub{% endblock title %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="fw-bold text-success mb-4">Your Shopping Cart</h2>
+    
+    {% if cart.items.all %}
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body p-4">
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead class="text-muted">
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in cart.items.all %}
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="bg-light rounded-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                                                <span class="fs-3">🌾</span>
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-0 fw-bold">{{ item.product.name }}</h6>
+                                                <small class="text-muted">From {{ item.product.farmer.username }}</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>₹{{ item.product.price }}</td>
+                                    <td>
+                                        <span class="badge bg-light text-dark border px-3 py-2">{{ item.quantity }} {{ item.product.unit }}</span>
+                                    </td>
+                                    <td class="fw-bold text-success">₹{{ item.total_price }}</td>
+                                    <td>
+                                        <form action="{% url 'orders:remove_from_cart' item.id %}" method="post">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-3">Remove</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 bg-light">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-4">Order Summary</h5>
+                    <div class="d-flex justify-content-between mb-3 text-muted">
+                        <span>Subtotal</span>
+                        <span>₹{{ cart.total_price }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3 text-muted">
+                        <span>Delivery Fee</span>
+                        <span>₹40.00</span>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between mb-4">
+                        <span class="fw-bold fs-5">Total</span>
+                        <span class="fw-black text-success fs-4">₹{{ cart.total_price|add:"40" }}</span>
+                    </div>
+                    <a href="{% url 'orders:checkout' %}" class="btn btn-success btn-lg w-100 rounded-pill fw-bold">Proceed to Checkout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <span class="display-1">🛒</span>
+        <h3 class="fw-bold text-muted mt-3">Your cart is empty</h3>
+        <p class="text-muted mb-4">Looks like you haven't added any fresh produce yet.</p>
+        <a href="{% url 'marketplace:product_list' %}" class="btn btn-success rounded-pill px-4 fw-medium">Start Shopping</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}

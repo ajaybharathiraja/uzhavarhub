@@ -1,0 +1,87 @@
+{% extends 'farmer/farmer_base.html' %}
+
+{% block farmer_content %}
+<div class="d-flex justify-content-between align-items-center mb-5">
+    <div>
+        <h2 class="fw-bold text-dark mb-1">Welcome back, {{ user.username }}!</h2>
+        <p class="text-muted mb-0">Here's what's happening with your farm today.</p>
+    </div>
+    <a href="{% url 'farmer:add_product' %}" class="btn btn-success fw-medium rounded-pill px-4 shadow-sm">+ Add New Product</a>
+</div>
+
+<div class="row g-4 mb-5">
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body p-4 text-center">
+                <div class="bg-success bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3" style="width: 60px; height: 60px;">
+                    <span class="fs-4 text-success">🌾</span>
+                </div>
+                <h6 class="text-muted fw-bold text-uppercase mb-2">Total Products</h6>
+                <h3 class="fw-black text-dark mb-0">{{ products_count }}</h3>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm rounded-4 h-100 opacity-75">
+            <div class="card-body p-4 text-center">
+                <div class="bg-warning bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3" style="width: 60px; height: 60px;">
+                    <span class="fs-4 text-warning">📦</span>
+                </div>
+                <h6 class="text-muted fw-bold text-uppercase mb-2">Pending Orders</h6>
+                <h3 class="fw-black text-dark mb-0">0</h3>
+                <small class="text-muted">Coming in Phase 7</small>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm rounded-4 h-100 opacity-75">
+            <div class="card-body p-4 text-center">
+                <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3" style="width: 60px; height: 60px;">
+                    <span class="fs-4 text-primary">💰</span>
+                </div>
+                <h6 class="text-muted fw-bold text-uppercase mb-2">Total Earnings</h6>
+                <h3 class="fw-black text-dark mb-0">₹0</h3>
+                <small class="text-muted">Coming in Phase 8</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card border-0 shadow-sm rounded-4" style="background: linear-gradient(135deg, #f0fdf4 0%, #e8f5e9 100%);">
+            <div class="card-body p-4 p-md-5">
+                <div class="d-flex align-items-center mb-4">
+                    <span class="fs-2 me-3">🤖</span>
+                    <h4 class="fw-black text-success mb-0">AI Market Insights</h4>
+                </div>
+                
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="bg-white p-4 rounded-4 shadow-sm h-100 border-start border-success border-4">
+                            <h6 class="text-muted fw-bold text-uppercase mb-2">Trending Crop</h6>
+                            <h4 class="fw-bold text-dark">{{ insights.top_product }}</h4>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="bg-white p-4 rounded-4 shadow-sm h-100 border-start border-{% if insights.growth_rate > 0 %}success{% else %}danger{% endif %} border-4">
+                            <h6 class="text-muted fw-bold text-uppercase mb-2">Demand Growth (30d)</h6>
+                            <h4 class="fw-bold text-{% if insights.growth_rate > 0 %}success{% else %}danger{% endif %}">
+                                {% if insights.growth_rate > 0 %}↑{% else %}↓{% endif %} {{ insights.growth_rate }}%
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="bg-white p-4 rounded-4 shadow-sm h-100 border-start border-primary border-4">
+                            <h6 class="text-muted fw-bold text-uppercase mb-2">Smart Forecast</h6>
+                            <p class="fw-medium text-dark mb-0">{{ insights.forecast }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock farmer_content %}

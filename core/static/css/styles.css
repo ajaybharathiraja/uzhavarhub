@@ -1,0 +1,62 @@
+:root {
+    --uh-green: #10B981;
+    --uh-green-dark: #059669;
+    --uh-green-light: #f0fdf4;
+    --uh-text: #065f46;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.text-success {
+    color: var(--uh-green) !important;
+}
+
+.text-success-emphasis {
+    color: var(--uh-text) !important;
+}
+
+.btn-success {
+    background-color: var(--uh-green);
+    border-color: var(--uh-green);
+}
+
+.btn-success:hover {
+    background-color: var(--uh-green-dark);
+    border-color: var(--uh-green-dark);
+}
+
+.btn-outline-success {
+    color: var(--uh-green);
+    border-color: var(--uh-green);
+}
+
+.btn-outline-success:hover {
+    background-color: var(--uh-green-light);
+    color: var(--uh-green-dark);
+}
+
+.hero-section {
+    min-height: 60vh;
+}
+
+.fw-black {
+    font-weight: 800;
+}
+
+.hero-title {
+    letter-spacing: -1px;
+}
+
+.hero-subtitle {
+    max-width: 700px;
+    font-size: 1.15rem;
+}
+
+.footer-bg {
+    background-color: var(--uh-green-light);
+}

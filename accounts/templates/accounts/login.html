@@ -1,0 +1,68 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Login - UzhavarHub{% endblock title %}
+
+{% block navbar %}{% endblock navbar %}
+{% block footer %}{% endblock footer %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow border-0 rounded-4" style="background-color: #ffffff;">
+                <div class="card-body p-5">
+                    <div class="text-center mb-4">
+                        <h2 class="text-success fw-black mb-2">Welcome Back</h2>
+                        <p class="text-muted">Please log in to your account</p>
+                    </div>
+                    
+                    <form method="post" id="login-form">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold text-dark">{{ field.label }}</label>
+                                <input type="{{ field.field.widget.input_type }}" name="{{ field.html_name }}" class="form-control" required id="{{ field.auto_id }}">
+                                {% if field.errors %}
+                                    <div class="text-danger mt-1 small fw-medium">{{ field.errors }}</div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                        
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger rounded-3">
+                                {{ form.non_field_errors }}
+                            </div>
+                        {% endif %}
+                        
+                        <div class="d-grid mt-5">
+                            <button type="submit" class="btn btn-success btn-lg fw-bold rounded-3 shadow-sm">Login</button>
+                        </div>
+                    </form>
+
+                    <!-- Quick Sample Logins -->
+                    <div class="mt-4 pt-4 border-top">
+                        <p class="text-center text-muted small fw-bold mb-3">TEST ACCOUNTS</p>
+                        <div class="d-flex flex-column gap-2">
+                            <button type="button" class="btn btn-outline-success btn-sm rounded-pill" onclick="quickLogin('sample_customer', 'customer123')">🧑‍🌾 Login as Customer</button>
+                            <button type="button" class="btn btn-outline-primary btn-sm rounded-pill" onclick="quickLogin('sample_farmer', 'farmer123')">🚜 Login as Farmer</button>
+                            <button type="button" class="btn btn-outline-dark btn-sm rounded-pill" onclick="quickLogin('sample_admin', 'admin123')">🛡️ Login as Admin</button>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-4 pt-3 border-top">
+                        <p class="text-muted mb-0">Don't have an account? <a href="{% url 'accounts:signup' %}" class="text-success text-decoration-none fw-bold">Sign up here</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function quickLogin(username, password) {
+    document.querySelector('input[name="username"]').value = username;
+    document.querySelector('input[name="password"]').value = password;
+    document.getElementById('login-form').submit();
+}
+</script>
+{% endblock content %}
