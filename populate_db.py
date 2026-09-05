@@ -19,11 +19,11 @@ def populate():
     if created:
         farmer.set_password('farmer123')
         farmer.save()
-        FarmerProfile.objects.get_or_create(user=farmer, defaults={'farm_name': 'Green Valley Farms'})
+        FarmerProfile.objects.get_or_create(user=farmer, defaults={'farm_name': 'Kaveri Delta Farms', 'location': 'Thanjavur, Tamil Nadu'})
         print("Created sample_farmer (password: farmer123)")
     else:
         # Just ensure profile exists
-        FarmerProfile.objects.get_or_create(user=farmer, defaults={'farm_name': 'Green Valley Farms'})
+        FarmerProfile.objects.get_or_create(user=farmer, defaults={'farm_name': 'Kaveri Delta Farms', 'location': 'Thanjavur, Tamil Nadu'})
 
     # 2. Create Categories
     categories_data = [
@@ -42,29 +42,34 @@ def populate():
     # 3. Create sample Products
     products_data = [
         {
-            'category': cat_objs['fresh-vegetables'], 'name': 'Organic Tomatoes', 'slug': 'organic-tomatoes',
-            'description': 'Juicy, red organic tomatoes hand-picked this morning.',
-            'price': 45.00, 'unit': 'kg', 'stock_quantity': 50
+            'category': cat_objs['fresh-vegetables'], 'name': 'Ooty Carrots', 'slug': 'ooty-carrots',
+            'description': 'Fresh, crunchy and naturally sweet carrots straight from the Nilgiris.',
+            'price': 60.00, 'unit': 'kg', 'stock_quantity': 40
         },
         {
-            'category': cat_objs['fresh-vegetables'], 'name': 'Fresh Spinach', 'slug': 'fresh-spinach',
-            'description': 'Crisp and green spinach leaves, pesticide free.',
-            'price': 20.00, 'unit': 'bunch', 'stock_quantity': 100
+            'category': cat_objs['fresh-vegetables'], 'name': 'Pollachi Coconuts', 'slug': 'pollachi-coconuts',
+            'description': 'Large, water-filled coconuts from the groves of Pollachi.',
+            'price': 35.00, 'unit': 'piece', 'stock_quantity': 150
         },
         {
-            'category': cat_objs['fresh-fruits'], 'name': 'Alphonso Mangoes', 'slug': 'alphonso-mangoes',
-            'description': 'Sweet and ripe Alphonso mangoes, straight from the orchard.',
-            'price': 400.00, 'unit': 'dozen', 'stock_quantity': 20
+            'category': cat_objs['fresh-fruits'], 'name': 'Salem Mangoes (Imampasand)', 'slug': 'salem-mangoes',
+            'description': 'The king of mangoes, rich and sweet, directly from Salem orchards.',
+            'price': 150.00, 'unit': 'kg', 'stock_quantity': 30
         },
         {
-            'category': cat_objs['dairy-eggs'], 'name': 'Free-Range Eggs', 'slug': 'free-range-eggs',
-            'description': 'Brown eggs from free-roaming hens.',
-            'price': 90.00, 'unit': 'dozen', 'stock_quantity': 30
+            'category': cat_objs['dairy-eggs'], 'name': 'Country Chicken Eggs (Naattu Kozhi Muttai)', 'slug': 'naattu-kozhi-muttai',
+            'description': 'Healthy country chicken eggs from free-ranging native breeds.',
+            'price': 120.00, 'unit': 'dozen', 'stock_quantity': 25
         },
         {
-            'category': cat_objs['grains-pulses'], 'name': 'Basmati Rice', 'slug': 'basmati-rice',
-            'description': 'Premium long-grain aged Basmati rice.',
-            'price': 120.00, 'unit': 'kg', 'stock_quantity': 200
+            'category': cat_objs['grains-pulses'], 'name': 'Thanjavur Ponni Rice', 'slug': 'thanjavur-ponni-rice',
+            'description': 'Premium quality, traditional boiled Ponni rice from the rice bowl of Tamil Nadu.',
+            'price': 75.00, 'unit': 'kg', 'stock_quantity': 500
+        },
+        {
+            'category': cat_objs['grains-pulses'], 'name': 'Erode Turmeric (Manjal)', 'slug': 'erode-turmeric',
+            'description': 'High curcumin organic turmeric powder from Erode.',
+            'price': 250.00, 'unit': 'kg', 'stock_quantity': 50
         }
     ]
 
@@ -72,7 +77,7 @@ def populate():
         Product.objects.get_or_create(
             slug=p_data['slug'],
             defaults={
-                'farmer': farmer,
+                'farmer': farmer.farmer_profile,
                 'category': p_data['category'],
                 'name': p_data['name'],
                 'description': p_data['description'],

@@ -1,0 +1,82 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}{{ title }} - UzhavarHub{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row mb-5 text-center">
+        <div class="col-lg-8 mx-auto">
+            <h1 class="display-4 fw-bold text-success mb-3">Meet Our Farmers</h1>
+            <p class="lead text-secondary">The heart and soul of UzhavarHub. Learn more about the dedicated individuals bringing fresh produce to your table.</p>
+        </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for farmer in farmers %}
+        <div class="col" id="farmer-{{ farmer.id }}">
+            <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden hover-lift position-relative">
+                <!-- Top Accent Bar -->
+                <div class="bg-success" style="height: 60px;"></div>
+                
+                <div class="card-body p-4 pt-0 text-center">
+                    <!-- Farmer Avatar -->
+                    <div class="bg-white rounded-circle shadow-sm d-inline-flex align-items-center justify-content-center mb-3 position-relative" style="width: 100px; height: 100px; margin-top: -50px; border: 4px solid #fff;">
+                        <span class="display-3">🧑‍🌾</span>
+                        {% if farmer.is_verified %}
+                        <span class="position-absolute bottom-0 end-0 bg-primary text-white rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 28px; height: 28px;" title="Verified Farmer">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                            </svg>
+                        </span>
+                        {% endif %}
+                    </div>
+                    
+                    <h4 class="card-title fw-bold text-dark mb-1">{{ farmer.farm_name }}</h4>
+                    <p class="text-success fw-medium small mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-geo-alt-fill me-1" viewBox="0 0 16 16">
+                            <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                        </svg>
+                        {{ farmer.location|default:"Tamil Nadu, India" }}
+                    </p>
+                    
+                    <p class="card-text text-secondary small mb-4 flex-grow-1">
+                        {{ farmer.bio|default:"A dedicated farmer committed to sustainable agriculture and providing the freshest produce to the community."|truncatechars:120 }}
+                    </p>
+                    
+                    <div class="mt-auto border-top pt-3">
+                        <a href="{% url 'marketplace:product_list' %}" class="btn btn-outline-success rounded-pill px-4 shadow-sm w-100 fw-medium transition-all hover-fill">
+                            View Products
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <div class="display-1 text-muted mb-4 opacity-50">🧑‍🌾</div>
+            <h3 class="text-dark fw-bold mb-2">No farmers found</h3>
+            <p class="text-secondary">We are currently onboarding our farmers. Please check back soon!</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+/* Scoped premium CSS for the farmers page */
+.hover-lift {
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+}
+.hover-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(25, 135, 84, 0.15) !important;
+}
+.hover-fill {
+    transition: all 0.3s ease;
+}
+.hover-fill:hover {
+    background-color: #198754;
+    color: white;
+}
+</style>
+{% endblock %}

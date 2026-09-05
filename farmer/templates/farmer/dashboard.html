@@ -53,9 +53,14 @@
     <div class="col-12">
         <div class="card border-0 shadow-sm rounded-4" style="background: linear-gradient(135deg, #f0fdf4 0%, #e8f5e9 100%);">
             <div class="card-body p-4 p-md-5">
-                <div class="d-flex align-items-center mb-4">
-                    <span class="fs-2 me-3">🤖</span>
-                    <h4 class="fw-black text-success mb-0">AI Market Insights</h4>
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div class="d-flex align-items-center">
+                        <span class="fs-2 me-3">🤖</span>
+                        <h4 class="fw-black text-success mb-0">AI Market Insights</h4>
+                    </div>
+                    <a href="{% url 'farmer:crop_recommendation' %}" class="btn btn-outline-success fw-medium rounded-pill px-4 shadow-sm bg-white">
+                        🌱 Crop Recommendation AI
+                    </a>
                 </div>
                 
                 <div class="row g-4">

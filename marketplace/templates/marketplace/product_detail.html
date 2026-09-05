@@ -1,0 +1,106 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}{{ title }} - UzhavarHub{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row align-items-center mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="{% url 'marketplace:product_list' %}" class="text-success text-decoration-none">Products</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'marketplace:product_list' %}?category={{ product.category.slug }}" class="text-success text-decoration-none">{{ product.category.name }}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row g-5">
+        <!-- Product Image Placeholder -->
+        <div class="col-md-6">
+            <div class="bg-light rounded-5 h-100 min-vh-50 d-flex align-items-center justify-content-center shadow-sm" style="min-height: 400px;">
+                <span class="display-1 opacity-25" style="font-size: 8rem;">
+                    {% if 'Mango' in product.name %}🥭
+                    {% elif 'Carrot' in product.name %}🥕
+                    {% elif 'Coconut' in product.name %}🥥
+                    {% elif 'Egg' in product.name %}🥚
+                    {% elif 'Rice' in product.name %}🌾
+                    {% elif 'Turmeric' in product.name %}✨
+                    {% else %}🌱{% endif %}
+                </span>
+            </div>
+        </div>
+
+        <!-- Product Details -->
+        <div class="col-md-6">
+            <div class="d-flex align-items-center gap-3 mb-3">
+                <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3 py-2 fw-medium border border-success-subtle">
+                    {{ product.category.name }}
+                </span>
+                {% if product.stock_quantity > 0 %}
+                    <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-3 py-2 fw-medium border border-primary-subtle">
+                        In Stock ({{ product.stock_quantity }} {{ product.unit }}s)
+                    </span>
+                {% else %}
+                    <span class="badge bg-danger bg-opacity-10 text-danger rounded-pill px-3 py-2 fw-medium border border-danger-subtle">
+                        Out of Stock
+                    </span>
+                {% endif %}
+            </div>
+
+            <h1 class="display-5 fw-bold text-dark mb-2">{{ product.name }}</h1>
+            
+            <div class="d-flex align-items-center gap-2 mb-4 pb-4 border-bottom">
+                <div class="bg-success-subtle text-success rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; font-size: 1.2rem;">
+                    🧑‍🌾
+                </div>
+                <div>
+                    <span class="text-secondary small d-block lh-1">Farm / Vendor</span>
+                    <a href="{% url 'marketplace:farmer_list' %}#farmer-{{ product.farmer.id }}" class="text-decoration-none text-dark fw-medium hover-success">
+                        {{ product.farmer.farm_name }}
+                    </a>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <h2 class="text-success display-6 fw-bold mb-0">₹{{ product.price }} <span class="text-muted fs-5 fw-normal">/ {{ product.unit }}</span></h2>
+            </div>
+
+            <p class="lead text-secondary mb-5">{{ product.description }}</p>
+
+            <div class="d-flex gap-3">
+                {% if product.stock_quantity > 0 %}
+                <a href="{% url 'orders:add_to_cart' product.id %}" class="btn btn-success btn-lg rounded-pill px-5 shadow-sm hover-lift d-flex align-items-center gap-2 add-to-cart-btn flex-grow-1 justify-content-center">
+                    <span>Add to Cart</span> 🛒
+                </a>
+                {% else %}
+                <button class="btn btn-secondary btn-lg rounded-pill px-5 shadow-sm flex-grow-1" disabled>
+                    Out of Stock
+                </button>
+                {% endif %}
+                <a href="{% url 'marketplace:product_list' %}" class="btn btn-outline-secondary btn-lg rounded-pill px-4 shadow-sm hover-lift">
+                    Back
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.hover-lift {
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+}
+.hover-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+}
+.hover-success:hover {
+    color: #198754 !important;
+}
+.add-to-cart-btn:hover {
+    background-color: #146c43 !important;
+}
+</style>
+{% endblock %}

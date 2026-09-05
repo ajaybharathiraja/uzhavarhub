@@ -1,0 +1,62 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}{{ title }} - UzhavarHub{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row mb-5 text-center">
+        <div class="col-lg-8 mx-auto">
+            <h1 class="display-4 fw-bold text-success mb-3">Browse by Category</h1>
+            <p class="lead text-secondary">Find exactly what you're looking for. From fresh fruits to daily dairy, we have it all sorted for you.</p>
+        </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+        {% for category in categories %}
+        <div class="col">
+            <a href="{% url 'marketplace:product_list' %}?category={{ category.slug }}" class="text-decoration-none">
+                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden hover-lift category-card text-center">
+                    <div class="bg-success bg-opacity-10 py-5">
+                        <span class="display-1">
+                            {% if 'Vegetables' in category.name %}🥬
+                            {% elif 'Fruits' in category.name %}🍎
+                            {% elif 'Dairy' in category.name %}🥛
+                            {% elif 'Grains' in category.name %}🌾
+                            {% else %}🛒{% endif %}
+                        </span>
+                    </div>
+                    <div class="card-body p-4">
+                        <h4 class="card-title fw-bold text-dark mb-2">{{ category.name }}</h4>
+                        <p class="card-text text-secondary small mb-0">{{ category.description|default:"Explore fresh products in this category." }}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <div class="display-1 text-muted mb-4 opacity-50">🛒</div>
+            <h3 class="text-dark fw-bold mb-2">No categories found</h3>
+            <p class="text-secondary">We are currently updating our categories. Please check back soon!</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+/* Scoped premium CSS for the categories page */
+.hover-lift {
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+}
+.hover-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(25, 135, 84, 0.15) !important;
+}
+.category-card {
+    transition: all 0.3s ease;
+}
+.category-card:hover h4 {
+    color: #198754 !important;
+}
+</style>
+{% endblock %}

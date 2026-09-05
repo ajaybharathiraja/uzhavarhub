@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from marketplace.models import Product
@@ -13,7 +13,7 @@ def dashboard(request):
     if not is_farmer(request.user):
         raise PermissionDenied("Only farmers can access this portal.")
     
-    products_count = Product.objects.filter(farmer=request.user).count()
+    products_count = Product.objects.filter(farmer=request.user.farmer_profile).count()
     insights = get_market_insights(request.user)
     
     return render(request, 'farmer/dashboard.html', {
@@ -26,7 +26,7 @@ def product_list(request):
     if not is_farmer(request.user):
         raise PermissionDenied("Only farmers can access this portal.")
     
-    products = Product.objects.filter(farmer=request.user)
+    products = Product.objects.filter(farmer=request.user.farmer_profile)
     return render(request, 'farmer/product_list.html', {'products': products})
 
 @login_required
@@ -38,7 +38,7 @@ def add_product(request):
         form = ProductForm(request.POST)
         if form.is_valid():
             product = form.save(commit=False)
-            product.farmer = request.user
+            product.farmer = request.user.farmer_profile
             product.save()
             return redirect('farmer:product_list')
     else:
@@ -51,7 +51,7 @@ def edit_product(request, pk):
     if not is_farmer(request.user):
         raise PermissionDenied("Only farmers can access this portal.")
         
-    product = get_object_or_404(Product, pk=pk, farmer=request.user)
+    product = get_object_or_404(Product, pk=pk, farmer=request.user.farmer_profile)
     
     if request.method == 'POST':
         form = ProductForm(request.POST, instance=product)
@@ -68,7 +68,7 @@ def delete_product(request, pk):
     if not is_farmer(request.user):
         raise PermissionDenied("Only farmers can access this portal.")
         
-    product = get_object_or_404(Product, pk=pk, farmer=request.user)
+    product = get_object_or_404(Product, pk=pk, farmer=request.user.farmer_profile)
     
     if request.method == 'POST':
         product.delete()
@@ -161,3 +161,26 @@ def farmer_settings(request):
         return redirect('farmer:settings')
         
     return render(request, 'farmer/settings.html', {'profile': profile})
+
+@login_required
+def crop_recommendation_view(request):
+    if not is_farmer(request.user):
+        raise PermissionDenied("Only farmers can access this portal.")
+        
+    recommendation = None
+    if request.method == 'POST':
+        try:
+            n = float(request.POST.get('n', 0))
+            p = float(request.POST.get('p', 0))
+            k = float(request.POST.get('k', 0))
+            temperature = float(request.POST.get('temperature', 0))
+            humidity = float(request.POST.get('humidity', 0))
+            ph = float(request.POST.get('ph', 0))
+            rainfall = float(request.POST.get('rainfall', 0))
+            
+            from ai_services.analyzer import recommend_crop
+            recommendation = recommend_crop(n, p, k, temperature, humidity, ph, rainfall)
+        except Exception as e:
+            recommendation = f"Error processing inputs: {str(e)}"
+            
+    return render(request, 'farmer/crop_recommendation.html', {'recommendation': recommendation})

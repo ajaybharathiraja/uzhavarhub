@@ -13,4 +13,5 @@ urlpatterns = [
     path('orders/update/<int:item_id>/', views.update_order_status, name='update_status'),
     path('earnings/', views.farmer_earnings, name='earnings'),
     path('settings/', views.farmer_settings, name='settings'),
+    path('crop-recommendation/', views.crop_recommendation_view, name='crop_recommendation'),
 ]

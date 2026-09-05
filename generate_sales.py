@@ -58,7 +58,7 @@ def generate_mock_sales():
             OrderItem.objects.create(
                 order=order,
                 product=product,
-                farmer=product.farmer,
+                farmer=product.farmer.user,
                 quantity=qty,
                 price_at_purchase=price
             )

@@ -1,0 +1,113 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}AI Crop Recommendation - UzhavarHub{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h1 class="display-5 fw-bold text-success mb-2">🤖 AI Crop Recommendation</h1>
+            <p class="text-secondary lead">Enter your soil and weather metrics to get a machine-learning powered crop recommendation.</p>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <div class="card border-0 shadow-sm rounded-4 p-4">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label fw-medium text-dark">Nitrogen (N)</label>
+                            <input type="number" step="0.1" name="n" class="form-control" required placeholder="e.g. 90">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-medium text-dark">Phosphorus (P)</label>
+                            <input type="number" step="0.1" name="p" class="form-control" required placeholder="e.g. 42">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-medium text-dark">Potassium (K)</label>
+                            <input type="number" step="0.1" name="k" class="form-control" required placeholder="e.g. 43">
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <label class="form-label fw-medium text-dark">Temperature (°C)</label>
+                            <input type="number" step="0.1" name="temperature" class="form-control" required placeholder="e.g. 20.8">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-medium text-dark">Humidity (%)</label>
+                            <input type="number" step="0.1" name="humidity" class="form-control" required placeholder="e.g. 82.0">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-medium text-dark">Soil pH</label>
+                            <input type="number" step="0.1" name="ph" class="form-control" required placeholder="e.g. 6.5">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-medium text-dark">Rainfall (mm)</label>
+                            <input type="number" step="0.1" name="rainfall" class="form-control" required placeholder="e.g. 202.9">
+                        </div>
+
+                        <div class="col-12 mt-4 d-flex gap-2">
+                            <button type="button" class="btn btn-outline-secondary w-50 rounded-pill py-2 fw-medium shadow-sm" onclick="fillSampleData()">
+                                🎲 Fill Sample Data
+                            </button>
+                            <button type="submit" class="btn btn-success w-50 rounded-pill py-2 fw-bold text-uppercase shadow-sm">
+                                Get Recommendation
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="text-center mt-3">
+                <a href="{% url 'farmer:dashboard' %}" class="text-success text-decoration-none">← Back to Dashboard</a>
+            </div>
+        </div>
+        
+        {% if recommendation %}
+        <div class="col-lg-4 col-md-8 mt-4 mt-lg-0">
+            <div class="card border-0 shadow-sm rounded-4 p-4 text-center h-100 bg-success bg-opacity-10 border border-success-subtle d-flex flex-column justify-content-center">
+                <h3 class="fw-bold text-success mb-3">AI Recommendation</h3>
+                <div class="display-1 mb-3">
+                    {% if 'Rice' in recommendation %}🌾
+                    {% elif 'Mango' in recommendation %}🥭
+                    {% elif 'Coconut' in recommendation %}🥥
+                    {% elif 'Turmeric' in recommendation %}✨
+                    {% elif 'Carrot' in recommendation %}🥕
+                    {% else %}🌱{% endif %}
+                </div>
+                <h2 class="display-6 fw-bold text-dark mb-0">{{ recommendation }}</h2>
+                <p class="text-secondary mt-2 small">Based on your soil inputs and our machine learning model.</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    // Sample data presets representing ideal conditions for different crops
+    const samples = [
+        { name: 'Rice', n: 85, p: 45, k: 40, temperature: 28.5, humidity: 85.0, ph: 6.5, rainfall: 210.0 },
+        { name: 'Mango', n: 25, p: 25, k: 35, temperature: 32.0, humidity: 55.0, ph: 6.0, rainfall: 85.0 },
+        { name: 'Coconut', n: 30, p: 20, k: 65, temperature: 30.0, humidity: 88.0, ph: 6.8, rainfall: 180.0 },
+        { name: 'Turmeric', n: 45, p: 45, k: 45, temperature: 25.0, humidity: 70.0, ph: 6.5, rainfall: 125.0 },
+        { name: 'Carrot', n: 20, p: 45, k: 30, temperature: 15.0, humidity: 60.0, ph: 6.2, rainfall: 100.0 }
+    ];
+
+    function fillSampleData() {
+        // Pick a random sample
+        const sample = samples[Math.floor(Math.random() * samples.length)];
+        
+        // Fill the form inputs
+        document.querySelector('input[name="n"]').value = sample.n;
+        document.querySelector('input[name="p"]').value = sample.p;
+        document.querySelector('input[name="k"]').value = sample.k;
+        document.querySelector('input[name="temperature"]').value = sample.temperature;
+        document.querySelector('input[name="humidity"]').value = sample.humidity;
+        document.querySelector('input[name="ph"]').value = sample.ph;
+        document.querySelector('input[name="rainfall"]').value = sample.rainfall;
+    }
+</script>
+{% endblock %}
