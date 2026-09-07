@@ -34,6 +34,8 @@ CSRF_TRUSTED_ORIGINS = ['https://*.vercel.app', 'https://uzhavarhub.vercel.app']
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_NAME = 'uzhavar_csrftoken'
+SESSION_COOKIE_NAME = 'uzhavar_sessionid'
 
 
 # Application definition
