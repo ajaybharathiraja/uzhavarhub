@@ -37,7 +37,7 @@
                         <a href="{% url 'marketplace:product_detail' product.slug %}" class="text-decoration-none text-dark">
                             <h5 class="card-title fw-bold mb-1 text-truncate">{{ product.name }}</h5>
                         </a>
-                        <p class="text-muted small mb-3">From {{ product.farmer.farmer_profile.farm_name|default:product.farmer.username }}</p>
+                        <p class="text-muted small mb-3">From {{ product.farmer.farm_name|default:product.farmer.user.username }}</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="fs-5 fw-black text-success">₹{{ product.price }}/{{ product.unit }}</span>
                                 <a href="{% url 'orders:add_to_cart' product.id %}" class="btn btn-sm btn-success rounded-pill fw-medium px-3 add-to-cart-btn">Add to Cart</a>

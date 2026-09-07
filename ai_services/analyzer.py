@@ -53,18 +53,21 @@ def get_market_insights(farmer):
     Uses the trained LinearRegression model to forecast next week's sales for the farmer's top product.
     """
     items = OrderItem.objects.filter(farmer=farmer).values(
-        'product__name', 'quantity', 'order__created_at'
+        'product__name', 'quantity', 'order__created_at', 'price_at_purchase'
     )
     
     if not items:
         return {
             'top_product': 'Not enough data',
             'growth_rate': 0,
+            'price_trend': 0,
+            'current_price': 0,
             'forecast': 'Need more sales data to forecast using ML.'
         }
         
     df = pd.DataFrame(items)
     df['date'] = pd.to_datetime(df['order__created_at'])
+    df['price_at_purchase'] = df['price_at_purchase'].astype(float)
     
     product_sales = df.groupby('product__name')['quantity'].sum().reset_index()
     top_product_row = product_sales.loc[product_sales['quantity'].idxmax()]
@@ -75,6 +78,19 @@ def get_market_insights(farmer):
     last_15 = df[df['date'] >= (now - timedelta(days=15))]['quantity'].sum()
     prev_15 = df[(df['date'] >= (now - timedelta(days=30))) & (df['date'] < (now - timedelta(days=15)))]['quantity'].sum()
     growth = ((last_15 - prev_15) / prev_15) * 100 if prev_15 > 0 else (100 if last_15 > 0 else 0)
+    
+    # Calculate price trend for top product
+    top_product_data = df[df['product__name'] == top_product_name]
+    last_15_price_data = top_product_data[top_product_data['date'] >= (now - timedelta(days=15))]
+    prev_15_price_data = top_product_data[(top_product_data['date'] >= (now - timedelta(days=30))) & (top_product_data['date'] < (now - timedelta(days=15)))]
+    
+    avg_price_last_15 = last_15_price_data['price_at_purchase'].mean() if not last_15_price_data.empty else (top_product_data['price_at_purchase'].mean() if not top_product_data.empty else 0)
+    avg_price_prev_15 = prev_15_price_data['price_at_purchase'].mean() if not prev_15_price_data.empty else avg_price_last_15
+    
+    if avg_price_prev_15 > 0:
+        price_trend = ((avg_price_last_15 - avg_price_prev_15) / avg_price_prev_15) * 100
+    else:
+        price_trend = 0
     
     # Advanced Forecasting using ML Model
     model_path = get_model_path('demand_model.pkl')
@@ -115,5 +131,7 @@ def get_market_insights(farmer):
     return {
         'top_product': top_product_name,
         'growth_rate': round(growth, 1),
+        'price_trend': round(price_trend, 1),
+        'current_price': round(avg_price_last_15, 2),
         'forecast': forecast_text
     }
