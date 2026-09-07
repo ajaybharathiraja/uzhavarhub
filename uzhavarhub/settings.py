@@ -31,6 +31,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['.vercel.app', 'localhost', '127.0.0.1', '.loca.lt']
 CSRF_TRUSTED_ORIGINS = ['https://*.vercel.app', 'https://uzhavarhub.vercel.app']
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
 
 # Application definition
