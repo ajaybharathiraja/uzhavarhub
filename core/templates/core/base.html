@@ -2,6 +2,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-bs-theme', savedTheme);
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}UzhavarHub - Direct Farmer to Customer{% endblock title %}</title>
@@ -12,7 +16,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        body { font-family: 'Inter', sans-serif; }
         .navbar-brand { font-family: 'Outfit', sans-serif; }
         .flying-emoji {
             position: fixed;
@@ -111,6 +115,11 @@
                     <button type="submit" class="btn btn-sm btn-success rounded-end-pill px-3 fw-medium">Search</button>
                 </form>
                 {% endif %}
+
+                <!-- Theme Toggle Button -->
+                <button id="themeToggleBtn" class="btn btn-outline-secondary rounded-pill px-3 me-2 border-0" title="Toggle Theme">
+                    <span id="themeIcon">🌙</span>
+                </button>
 
                 {% if user.is_authenticated %}
                     {% if user.role == 'FARMER' %}
@@ -272,6 +281,26 @@
                     navbar.classList.remove('scrolled-nav');
                     navbar.classList.add('shadow-sm');
                 }
+            });
+
+            // Theme Toggle Logic
+            const themeToggleBtn = document.getElementById('themeToggleBtn');
+            const themeIcon = document.getElementById('themeIcon');
+            const htmlElement = document.documentElement;
+            
+            const updateThemeIcon = (theme) => {
+                themeIcon.innerText = theme === 'dark' ? '☀️' : '🌙';
+            };
+            
+            updateThemeIcon(htmlElement.getAttribute('data-bs-theme'));
+            
+            themeToggleBtn.addEventListener('click', () => {
+                const currentTheme = htmlElement.getAttribute('data-bs-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                
+                htmlElement.setAttribute('data-bs-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                updateThemeIcon(newTheme);
             });
         });
     </script>
