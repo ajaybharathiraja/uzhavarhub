@@ -30,6 +30,7 @@ SECRET_KEY = 'django-insecure-4k+n3@0n*fhb&g#klqxwqgf)gj@a#tm!%0_f$764#q64hei$zq
 DEBUG = True
 
 ALLOWED_HOSTS = ['.vercel.app', 'localhost', '127.0.0.1', '.loca.lt']
+CSRF_TRUSTED_ORIGINS = ['https://*.vercel.app', 'https://uzhavarhub.vercel.app']
 
 
 # Application definition
