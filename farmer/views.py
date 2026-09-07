@@ -182,5 +182,49 @@ def crop_recommendation_view(request):
             recommendation = recommend_crop(n, p, k, temperature, humidity, ph, rainfall)
         except Exception as e:
             recommendation = f"Error processing inputs: {str(e)}"
-            
     return render(request, 'farmer/crop_recommendation.html', {'recommendation': recommendation})
+
+@login_required
+def market_demand(request):
+    if not is_farmer(request.user):
+        raise PermissionDenied("Only farmers can access this portal.")
+        
+    from orders.models import OrderItem
+    from django.db.models import Sum
+    from django.utils import timezone
+    from datetime import timedelta
+    
+    products = Product.objects.filter(is_active=True).select_related('category')
+    
+    thirty_days_ago = timezone.now() - timedelta(days=30)
+    sales_data = OrderItem.objects.filter(order__created_at__gte=thirty_days_ago)\
+        .values('product_id')\
+        .annotate(total_sold=Sum('quantity'))
+        
+    sales_dict = {item['product_id']: item['total_sold'] for item in sales_data}
+    
+    product_demand_list = []
+    for product in products:
+        total_sold = sales_dict.get(product.id, 0)
+        
+        if total_sold > 50:
+            demand_level = 'High'
+            demand_color = 'success' # green
+        elif total_sold > 10:
+            demand_level = 'Medium'
+            demand_color = 'warning' # yellow
+        else:
+            demand_level = 'Low'
+            demand_color = 'danger' # red
+            
+        product_demand_list.append({
+            'product': product,
+            'total_sold': total_sold,
+            'demand_level': demand_level,
+            'demand_color': demand_color
+        })
+        
+    # Sort by total sold descending
+    product_demand_list.sort(key=lambda x: x['total_sold'], reverse=True)
+        
+    return render(request, 'farmer/market_demand.html', {'product_demand_list': product_demand_list})

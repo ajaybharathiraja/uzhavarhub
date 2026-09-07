@@ -17,6 +17,9 @@
                 <a href="{% url 'farmer:product_list' %}" class="list-group-item list-group-item-action border-0 py-3 text-dark fw-medium {% if 'product' in request.resolver_match.url_name %}bg-success text-white rounded-end-pill{% endif %}">
                     🌾 My Products
                 </a>
+                <a href="{% url 'farmer:market_demand' %}" class="list-group-item list-group-item-action border-0 py-3 text-dark fw-medium {% if request.resolver_match.url_name == 'market_demand' %}bg-success text-white rounded-end-pill{% endif %}">
+                    📈 Market Demand
+                </a>
                 <a href="{% url 'farmer:orders' %}" class="list-group-item list-group-item-action border-0 py-3 text-dark fw-medium {% if request.resolver_match.url_name == 'orders' %}bg-success text-white rounded-end-pill{% endif %}">
                     📦 Orders
                 </a>

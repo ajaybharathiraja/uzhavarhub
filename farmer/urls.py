@@ -14,4 +14,5 @@ urlpatterns = [
     path('earnings/', views.farmer_earnings, name='earnings'),
     path('settings/', views.farmer_settings, name='settings'),
     path('crop-recommendation/', views.crop_recommendation_view, name='crop_recommendation'),
+    path('market-demand/', views.market_demand, name='market_demand'),
 ]
