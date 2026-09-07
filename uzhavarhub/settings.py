@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-4k+n3@0n*fhb&g#klqxwqgf)gj@a#tm!%0_f$764#q64hei$zq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['.vercel.app', 'localhost', '127.0.0.1', '.loca.lt']
 
 
 # Application definition
@@ -89,12 +89,28 @@ WSGI_APPLICATION = 'uzhavarhub.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if os.environ.get('VERCEL') == '1':
+    import shutil
+    db_path = '/tmp/db.sqlite3'
+    bundled_db = BASE_DIR / 'db.sqlite3'
+    if not os.path.exists(db_path) and bundled_db.exists():
+        shutil.copy2(bundled_db, db_path)
+    
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': db_path,
+        }
     }
-}
+    # Use cookie-based sessions so users don't get logged out if the serverless instance resets
+    SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation
