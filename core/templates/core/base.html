@@ -171,6 +171,21 @@
         {% endblock content %}
     </main>
 
+    {% if user.role != 'FARMER' %}
+    <!-- Floating Cart Button -->
+    <a href="{% url 'orders:view_cart' %}" id="floating-cart-btn" class="btn btn-success position-fixed shadow-lg rounded-circle d-flex align-items-center justify-content-center border-2 border-white" style="bottom: 30px; right: 30px; width: 65px; height: 65px; z-index: 1050; transition: transform 0.3s ease;">
+        <span class="fs-2">🛒</span>
+        <span id="floating-cart-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger border border-light fs-6" {% if not user.cart.total_quantity %}style="display: none;"{% endif %}>
+            {{ user.cart.total_quantity|default:0 }}
+        </span>
+    </a>
+    <style>
+        #floating-cart-btn:hover {
+            transform: scale(1.1) !important;
+        }
+    </style>
+    {% endif %}
+
     {% block footer %}
     <!-- Footer -->
     <footer class="footer-bg py-5 mt-5">
@@ -217,6 +232,8 @@
         document.addEventListener('DOMContentLoaded', function() {
             const addButtons = document.querySelectorAll('.add-to-cart-btn');
             const cartIconBtn = document.getElementById('cart-icon-btn');
+            const floatingCartBtn = document.getElementById('floating-cart-btn');
+            const targetBtn = floatingCartBtn || cartIconBtn;
 
             addButtons.forEach(btn => {
                 btn.addEventListener('click', function(e) {
@@ -240,8 +257,8 @@
                     flyEl.getBoundingClientRect();
                     
                     // Get cart icon position
-                    if (cartIconBtn) {
-                        const cartRect = cartIconBtn.getBoundingClientRect();
+                    if (targetBtn) {
+                        const cartRect = targetBtn.getBoundingClientRect();
                         flyEl.style.left = (cartRect.left + 15) + 'px';
                         flyEl.style.top = cartRect.top + 'px';
                         flyEl.style.opacity = '0';
@@ -249,9 +266,9 @@
                         
                         setTimeout(() => {
                             flyEl.remove();
-                            cartIconBtn.classList.remove('cart-pop');
-                            void cartIconBtn.offsetWidth; // trigger reflow
-                            cartIconBtn.classList.add('cart-pop');
+                            targetBtn.classList.remove('cart-pop');
+                            void targetBtn.offsetWidth; // trigger reflow
+                            targetBtn.classList.add('cart-pop');
                         }, 700);
                     } else {
                         flyEl.style.transform = 'translateY(-100px)';
@@ -268,11 +285,16 @@
                     })
                     .then(response => response.json())
                     .then(data => {
-                        if(data.success && cartIconBtn) {
-                            const badge = document.getElementById('cart-count-badge');
-                            if (badge) {
-                                badge.innerText = data.cart_count;
-                                badge.style.display = 'block';
+                        if(data.success) {
+                            const badge1 = document.getElementById('cart-count-badge');
+                            const badge2 = document.getElementById('floating-cart-badge');
+                            if (badge1) {
+                                badge1.innerText = data.cart_count;
+                                badge1.style.display = 'block';
+                            }
+                            if (badge2) {
+                                badge2.innerText = data.cart_count;
+                                badge2.style.display = 'block';
                             }
                         }
                     })
