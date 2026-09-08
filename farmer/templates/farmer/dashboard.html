@@ -3,7 +3,7 @@
 {% block farmer_content %}
 <div class="d-flex justify-content-between align-items-center mb-5">
     <div>
-        <h2 class="fw-bold text-dark mb-1">Welcome back, {{ user.username }}!</h2>
+        <h2 class="fw-bold text-body mb-1">Welcome back, {{ user.username }}!</h2>
         <p class="text-muted mb-0">Here's what's happening with your farm today.</p>
     </div>
     <a href="{% url 'farmer:add_product' %}" class="btn btn-success fw-medium rounded-pill px-4 shadow-sm">+ Add New Product</a>
@@ -17,7 +17,7 @@
                     <span class="fs-4 text-success">🌾</span>
                 </div>
                 <h6 class="text-muted fw-bold text-uppercase mb-2">Total Products</h6>
-                <h3 class="fw-black text-dark mb-0">{{ products_count }}</h3>
+                <h3 class="fw-black text-body mb-0">{{ products_count }}</h3>
             </div>
         </div>
     </div>
@@ -29,7 +29,7 @@
                     <span class="fs-4 text-warning">📦</span>
                 </div>
                 <h6 class="text-muted fw-bold text-uppercase mb-2">Pending Orders</h6>
-                <h3 class="fw-black text-dark mb-0">0</h3>
+                <h3 class="fw-black text-body mb-0">0</h3>
                 <small class="text-muted">Coming in Phase 7</small>
             </div>
         </div>
@@ -42,7 +42,7 @@
                     <span class="fs-4 text-primary">💰</span>
                 </div>
                 <h6 class="text-muted fw-bold text-uppercase mb-2">Total Earnings</h6>
-                <h3 class="fw-black text-dark mb-0">₹0</h3>
+                <h3 class="fw-black text-body mb-0">₹0</h3>
                 <small class="text-muted">Coming in Phase 8</small>
             </div>
         </div>
@@ -58,20 +58,20 @@
                         <span class="fs-2 me-3">🤖</span>
                         <h4 class="fw-black text-success mb-0">AI Market Insights</h4>
                     </div>
-                    <a href="{% url 'farmer:crop_recommendation' %}" class="btn btn-outline-success fw-medium rounded-pill px-4 shadow-sm bg-white">
+                    <a href="{% url 'farmer:crop_recommendation' %}" class="btn btn-outline-success fw-medium rounded-pill px-4 shadow-sm bg-body">
                         🌱 Crop Recommendation AI
                     </a>
                 </div>
                 
                 <div class="row g-4">
                     <div class="col-md-4">
-                        <div class="bg-white p-4 rounded-4 shadow-sm h-100 border-start border-success border-4">
+                        <div class="bg-body p-4 rounded-4 shadow-sm h-100 border-start border-success border-4">
                             <h6 class="text-muted fw-bold text-uppercase mb-2">Trending Crop</h6>
-                            <h4 class="fw-bold text-dark">{{ insights.top_product }}</h4>
+                            <h4 class="fw-bold text-body">{{ insights.top_product }}</h4>
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="bg-white p-4 rounded-4 shadow-sm h-100 border-start border-{% if insights.growth_rate > 0 %}success{% else %}danger{% endif %} border-4">
+                        <div class="bg-body p-4 rounded-4 shadow-sm h-100 border-start border-{% if insights.growth_rate > 0 %}success{% else %}danger{% endif %} border-4">
                             <h6 class="text-muted fw-bold text-uppercase mb-2">Demand Growth (30d)</h6>
                             <h4 class="fw-bold text-{% if insights.growth_rate > 0 %}success{% else %}danger{% endif %}">
                                 {% if insights.growth_rate > 0 %}↑{% elif insights.growth_rate < 0 %}↓{% else %}--{% endif %} {{ insights.growth_rate }}%
@@ -79,9 +79,9 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="bg-white p-4 rounded-4 shadow-sm h-100 border-start border-primary border-4">
+                        <div class="bg-body p-4 rounded-4 shadow-sm h-100 border-start border-primary border-4">
                             <h6 class="text-muted fw-bold text-uppercase mb-2">Smart Forecast</h6>
-                            <p class="fw-medium text-dark mb-0">{{ insights.forecast }}</p>
+                            <p class="fw-medium text-body mb-0">{{ insights.forecast }}</p>
                         </div>
                     </div>
                 </div>

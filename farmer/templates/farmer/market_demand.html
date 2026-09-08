@@ -5,7 +5,7 @@
 
 {% block farmer_content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h3 class="fw-bold text-dark mb-0">📈 Market Demand</h3>
+    <h3 class="fw-bold text-body mb-0">📈 Market Demand</h3>
     <p class="text-muted mb-0">Based on platform-wide sales over the last 30 days.</p>
 </div>
 
@@ -13,7 +13,7 @@
     <div class="card-body p-0">
         <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">
-                <thead class="table-light">
+                <thead class="bg-body-tertiary">
                     <tr>
                         <th scope="col" class="py-3 px-4 text-uppercase fw-semibold text-muted text-nowrap">Product</th>
                         <th scope="col" class="py-3 px-4 text-uppercase fw-semibold text-muted text-nowrap">Category</th>
@@ -25,9 +25,9 @@
                 <tbody>
                     {% for item in product_demand_list %}
                     <tr>
-                        <td class="py-3 px-4 fw-medium text-dark">{{ item.product.name }}</td>
+                        <td class="py-3 px-4 fw-medium text-body">{{ item.product.name }}</td>
                         <td class="py-3 px-4">
-                            <span class="badge bg-light text-dark border">{{ item.product.category.name }}</span>
+                            <span class="badge bg-body-tertiary text-body border">{{ item.product.category.name }}</span>
                         </td>
                         <td class="py-3 px-4 text-success fw-bold">₹{{ item.product.price }} / {{ item.product.unit }}</td>
                         <td class="py-3 px-4">

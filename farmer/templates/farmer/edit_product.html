@@ -7,14 +7,14 @@
 
 <div class="card border-0 shadow-sm rounded-4" style="max-width: 800px;">
     <div class="card-body p-5">
-        <h3 class="fw-bold text-dark mb-4">Edit {{ product.name }}</h3>
+        <h3 class="fw-bold text-body mb-4">Edit {{ product.name }}</h3>
         
         <form method="post">
             {% csrf_token %}
             <div class="row g-3">
                 {% for field in form %}
                     <div class="col-md-6 {% if field.name == 'description' %}col-md-12{% endif %} mb-3">
-                        <label class="form-label fw-semibold text-dark">{{ field.label }}</label>
+                        <label class="form-label fw-semibold text-body">{{ field.label }}</label>
                         {{ field }}
                         {% if field.help_text %}
                             <div class="form-text small">{{ field.help_text }}</div>

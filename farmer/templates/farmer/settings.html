@@ -2,7 +2,7 @@
 
 {% block farmer_content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="fw-bold text-dark mb-0">Farm Profile Settings</h2>
+    <h2 class="fw-bold text-body mb-0">Farm Profile Settings</h2>
 </div>
 
 <div class="card border-0 shadow-sm rounded-4 max-w-2xl">
@@ -14,26 +14,26 @@
             
             <div class="mb-4">
                 <label class="form-label fw-bold text-muted small">FARM NAME</label>
-                <input type="text" class="form-control form-control-lg bg-light border-0" name="farm_name" value="{{ profile.farm_name }}" required>
+                <input type="text" class="form-control form-control-lg bg-body-tertiary border-0" name="farm_name" value="{{ profile.farm_name }}" required>
                 <div class="form-text">This is the name customers will see on your products.</div>
             </div>
             
             <div class="mb-5">
                 <label class="form-label fw-bold text-muted small">LOCATION (CITY/REGION)</label>
-                <input type="text" class="form-control form-control-lg bg-light border-0" name="location" value="{{ profile.location }}" required>
+                <input type="text" class="form-control form-control-lg bg-body-tertiary border-0" name="location" value="{{ profile.location }}" required>
             </div>
             
             <h5 class="fw-bold mb-4 border-bottom pb-2">Account Information</h5>
             
             <div class="mb-4">
                 <label class="form-label fw-bold text-muted small">USERNAME</label>
-                <input type="text" class="form-control form-control-lg bg-light border-0 text-muted" value="{{ user.username }}" disabled>
+                <input type="text" class="form-control form-control-lg bg-body-tertiary border-0 text-muted" value="{{ user.username }}" disabled>
                 <div class="form-text">Usernames cannot be changed.</div>
             </div>
             
             <div class="mb-5">
                 <label class="form-label fw-bold text-muted small">EMAIL ADDRESS</label>
-                <input type="email" class="form-control form-control-lg bg-light border-0" name="email" value="{{ user.email }}">
+                <input type="email" class="form-control form-control-lg bg-body-tertiary border-0" name="email" value="{{ user.email }}">
             </div>
             
             <div class="d-flex justify-content-end gap-3">

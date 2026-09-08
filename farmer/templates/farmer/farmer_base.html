@@ -3,30 +3,30 @@
 {% block title %}Farmer Portal - UzhavarHub{% endblock title %}
 
 {% block content %}
-<div class="container-fluid" style="background-color: #f8f9fa;">
+<div class="container-fluid bg-body-tertiary">
     <div class="row">
         <!-- Sidebar -->
-        <div class="col-md-3 col-lg-2 bg-white shadow-sm p-0 position-sticky" style="top: 100px; height: calc(100vh - 100px); overflow-y: auto;">
-            <div class="p-4 border-bottom">
+        <div class="col-md-3 col-lg-2 bg-body shadow-sm p-0 position-sticky border-end border-opacity-10" style="top: 100px; height: calc(100vh - 100px); overflow-y: auto;">
+            <div class="p-4 border-bottom border-opacity-10">
                 <h5 class="fw-bold text-success mb-0">Farmer Portal</h5>
             </div>
             <div class="list-group list-group-flush mt-3">
-                <a href="{% url 'farmer:dashboard' %}" class="list-group-item list-group-item-action border-0 py-3 text-dark fw-medium {% if request.resolver_match.url_name == 'dashboard' %}bg-success text-white rounded-end-pill{% endif %}">
+                <a href="{% url 'farmer:dashboard' %}" class="list-group-item list-group-item-action border-0 py-3 text-body fw-medium {% if request.resolver_match.url_name == 'dashboard' %}bg-success text-white rounded-end-pill{% endif %}">
                     📊 Dashboard
                 </a>
-                <a href="{% url 'farmer:product_list' %}" class="list-group-item list-group-item-action border-0 py-3 text-dark fw-medium {% if 'product' in request.resolver_match.url_name %}bg-success text-white rounded-end-pill{% endif %}">
+                <a href="{% url 'farmer:product_list' %}" class="list-group-item list-group-item-action border-0 py-3 text-body fw-medium {% if 'product' in request.resolver_match.url_name %}bg-success text-white rounded-end-pill{% endif %}">
                     🌾 My Products
                 </a>
-                <a href="{% url 'farmer:market_demand' %}" class="list-group-item list-group-item-action border-0 py-3 text-dark fw-medium {% if request.resolver_match.url_name == 'market_demand' %}bg-success text-white rounded-end-pill{% endif %}">
+                <a href="{% url 'farmer:market_demand' %}" class="list-group-item list-group-item-action border-0 py-3 text-body fw-medium {% if request.resolver_match.url_name == 'market_demand' %}bg-success text-white rounded-end-pill{% endif %}">
                     📈 Market Demand
                 </a>
-                <a href="{% url 'farmer:orders' %}" class="list-group-item list-group-item-action border-0 py-3 text-dark fw-medium {% if request.resolver_match.url_name == 'orders' %}bg-success text-white rounded-end-pill{% endif %}">
+                <a href="{% url 'farmer:orders' %}" class="list-group-item list-group-item-action border-0 py-3 text-body fw-medium {% if request.resolver_match.url_name == 'orders' %}bg-success text-white rounded-end-pill{% endif %}">
                     📦 Orders
                 </a>
-                <a href="{% url 'farmer:earnings' %}" class="list-group-item list-group-item-action border-0 py-3 text-dark fw-medium {% if request.resolver_match.url_name == 'earnings' %}bg-success text-white rounded-end-pill{% endif %}">
+                <a href="{% url 'farmer:earnings' %}" class="list-group-item list-group-item-action border-0 py-3 text-body fw-medium {% if request.resolver_match.url_name == 'earnings' %}bg-success text-white rounded-end-pill{% endif %}">
                     💰 Earnings
                 </a>
-                <a href="{% url 'farmer:settings' %}" class="list-group-item list-group-item-action border-0 py-3 text-dark fw-medium {% if request.resolver_match.url_name == 'settings' %}bg-success text-white rounded-end-pill{% endif %}">
+                <a href="{% url 'farmer:settings' %}" class="list-group-item list-group-item-action border-0 py-3 text-body fw-medium {% if request.resolver_match.url_name == 'settings' %}bg-success text-white rounded-end-pill{% endif %}">
                     ⚙️ Settings
                 </a>
             </div>
