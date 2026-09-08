@@ -49,6 +49,11 @@
             max-width: 100%;
         }
         
+        [data-bs-theme="dark"] .glass-nav {
+            background: rgba(33, 37, 41, 0.95);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
         /* Scrolled Oval Navbar */
         .scrolled-nav {
             background: rgba(255, 255, 255, 0.85);
@@ -60,6 +65,12 @@
             padding-top: 12px !important;
             padding-bottom: 12px !important;
             width: calc(100% - 2rem) !important;
+        }
+
+        [data-bs-theme="dark"] .scrolled-nav {
+            background: rgba(33, 37, 41, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
         }
         
         /* Ensure dropdowns inside the oval nav still look okay */

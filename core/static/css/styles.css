@@ -5,6 +5,11 @@
     --uh-text: #065f46;
 }
 
+[data-bs-theme="dark"] {
+    --uh-green-light: #022c22;
+    --uh-text: #a7f3d0;
+}
+
 body {
     font-family: 'Inter', sans-serif;
     display: flex;
