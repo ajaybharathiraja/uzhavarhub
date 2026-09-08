@@ -139,12 +139,6 @@
                     
                     {% if user.role != 'FARMER' %}
                     <a href="{% url 'orders:history' %}" class="text-success text-decoration-none fw-medium me-3 text-nowrap">Orders</a>
-                    <a href="{% url 'orders:view_cart' %}" id="cart-icon-btn" class="btn btn-light position-relative rounded-pill px-3 me-2">
-                        🛒 Cart
-                        <span id="cart-count-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" {% if not user.cart.total_quantity %}style="display: none;"{% endif %}>
-                            {{ user.cart.total_quantity|default:0 }}
-                        </span>
-                    </a>
                     {% endif %}
                     <span class="text-success-emphasis fw-medium text-nowrap" title="{{ user.username }}">Hi, {{ user.username|truncatechars:15 }}</span>
                     <form action="{% url 'accounts:logout' %}" method="post" class="d-inline m-0">
