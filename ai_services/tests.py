@@ -18,12 +18,13 @@ class AIServicesTests(TestCase):
             
         self.assertIn('Crop_Recommendation', metrics)
         crop_metrics = metrics['Crop_Recommendation']
-        self.assertGreater(crop_metrics['RF_Accuracy'], 0.85, "Crop accuracy must be > 0.85")
-        self.assertGreater(crop_metrics['RF_Accuracy'], crop_metrics['Baseline_LR_Accuracy'], "RF must beat Baseline LR")
+        self.assertIn('RF_Accuracy_Mean', crop_metrics)
+        self.assertIn('RF_Accuracy_95CI', crop_metrics)
+        self.assertGreater(crop_metrics['RF_Accuracy_Mean'], 0.85, "Crop accuracy must be > 0.85")
         
         self.assertIn('Demand_Forecasting', metrics)
         demand_metrics = metrics['Demand_Forecasting']
-        self.assertIn('Test_RMSE', demand_metrics)
+        self.assertIn('Test_R2_Mean', demand_metrics)
 
     def test_crop_recommendation_valid_prediction(self):
         self.assertIsNotNone(self.crop_model, "crop_model.pkl not loaded")

@@ -1,0 +1,41 @@
+graph TD
+    subgraph "Frontend Layer (Browser)"
+        A1[Farmer Dashboard]
+        A2[Customer Marketplace]
+        A3[Admin Panel]
+    end
+
+    subgraph "Application Layer (Django)"
+        B1[Core / Routes]
+        B2[Marketplace App]
+        B3[Farmer App]
+        B4[Orders App]
+        B5[AI Services App]
+    end
+
+    subgraph "Data Storage"
+        C1[(PostgreSQL Database)]
+    end
+
+    subgraph "AI Inference Layer"
+        D1[Crop Recommendation Model .pkl]
+        D2[Demand Forecasting Model .pkl]
+        D3[Heuristic Analytics]
+    end
+
+    %% Connections
+    A1 --> B3
+    A2 --> B2
+    A1 & A2 --> B4
+    A3 --> B1
+
+    B2 <--> C1
+    B3 <--> C1
+    B4 <--> C1
+
+    B3 --> B5
+    B2 --> B5
+
+    B5 --> D1
+    B5 --> D2
+    B5 --> D3

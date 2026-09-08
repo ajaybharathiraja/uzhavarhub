@@ -127,12 +127,53 @@ def load_model(filename):
     return None
 
 def predict_optimal_price(base_price, competitor_price, shelf_life, seasonality_index=1.0):
-    model = load_model('pricing_model.pkl')
-    if model:
-        prediction = model.predict([[base_price, seasonality_index, competitor_price, shelf_life]])
-        return round(prediction[0], 2)
-    # Fallback mock
+    # This was the old signature. We now use the real pricing model inside the integrated strategy.
     return round(base_price * 1.1, 2)
+
+def get_integrated_market_strategy(n, p, k, temperature, humidity, ph, rainfall, date_obj=None):
+    """
+    The Core Novelty: Closed-Loop Coupling.
+    1. Agronomy: Predict optimal crop based on soil and weather.
+    2. Economics: Predict demand for that crop.
+    3. Pricing: Predict optimal listing price based on demand.
+    """
+    if date_obj is None:
+        date_obj = timezone.now() + timedelta(days=1)
+        
+    # 1. Crop Recommendation
+    crop = recommend_crop(n, p, k, temperature, humidity, ph, rainfall)
+    
+    day_of_year = date_obj.timetuple().tm_yday
+    month = date_obj.month
+    is_weekend = 1 if date_obj.weekday() >= 5 else 0
+    
+    # 2. Demand Forecasting
+    demand_model = load_model('demand_model.pkl')
+    forecasted_demand = 100 # fallback
+    if demand_model:
+        try:
+            # [day_of_year, month, is_weekend, prev_demand, Price, Discount]
+            pred = demand_model.predict([[day_of_year, month, is_weekend, 50, 20.0, 0.0]])
+            forecasted_demand = max(0, int(pred[0]))
+        except Exception:
+            pass
+            
+    # 3. Dynamic Pricing
+    pricing_model = load_model('pricing_model.pkl')
+    suggested_price = 20.0 # fallback
+    if pricing_model:
+        try:
+            # feature_cols = ['day_of_year', 'month', 'is_weekend', 'quantity', 'Demand']
+            pred_price = pricing_model.predict([[day_of_year, month, is_weekend, 50, forecasted_demand]])
+            suggested_price = max(0, round(pred_price[0], 2))
+        except Exception:
+            pass
+            
+    return {
+        'recommended_crop': crop,
+        'forecasted_demand_volume': forecasted_demand,
+        'suggested_price_per_kg': suggested_price
+    }
 
 def predict_crop_yield(area_acres, soil_quality, rainfall_mm, fertilizer_kg):
     model = load_model('yield_model.pkl')

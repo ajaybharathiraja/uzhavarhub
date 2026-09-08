@@ -1,0 +1,26 @@
+graph TD
+    subgraph Data Layer
+        A[Raw Kaggle Datasets] --> B[Data Imputation & Cleaning]
+        B --> C[Processed CSV Files]
+    end
+
+    subgraph Training Layer
+        C --> D[Feature Engineering]
+        D --> E{5-Fold Cross Validation}
+        E --> F[Random Forest Classifier]
+        E --> G[Linear Regression Model]
+        
+        F --> H[Model Metrics & Statistical Tests]
+        G --> H
+    end
+
+    subgraph Export Layer
+        H --> I[evaluation_results.json]
+        F --> J[crop_model.pkl]
+        G --> K[demand_model.pkl]
+    end
+
+    subgraph Inference Layer
+        J --> L[API / View Execution]
+        K --> L
+    end

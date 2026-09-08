@@ -69,17 +69,31 @@
         {% if recommendation %}
         <div class="col-lg-4 col-md-8 mt-4 mt-lg-0">
             <div class="card border-0 shadow-sm rounded-4 p-4 text-center h-100 bg-success bg-opacity-10 border border-success-subtle d-flex flex-column justify-content-center">
-                <h3 class="fw-bold text-success mb-3">AI Recommendation</h3>
-                <div class="display-1 mb-3">
-                    {% if 'Rice' in recommendation %}🌾
-                    {% elif 'Mango' in recommendation %}🥭
-                    {% elif 'Coconut' in recommendation %}🥥
-                    {% elif 'Turmeric' in recommendation %}✨
-                    {% elif 'Carrot' in recommendation %}🥕
-                    {% else %}🌱{% endif %}
-                </div>
-                <h2 class="display-6 fw-bold text-body mb-0">{{ recommendation }}</h2>
-                <p class="text-secondary mt-2 small">Based on your soil inputs and our machine learning model.</p>
+                {% if recommendation.recommended_crop %}
+                    <h3 class="fw-bold text-success mb-3">Integrated Strategy</h3>
+                    <div class="display-1 mb-3">
+                        {% if 'rice' in recommendation.recommended_crop %}🌾
+                        {% elif 'mango' in recommendation.recommended_crop %}🥭
+                        {% elif 'coconut' in recommendation.recommended_crop %}🥥
+                        {% elif 'turmeric' in recommendation.recommended_crop %}✨
+                        {% elif 'carrot' in recommendation.recommended_crop %}🥕
+                        {% else %}🌱{% endif %}
+                    </div>
+                    <h2 class="display-6 fw-bold text-body mb-0">{{ recommendation.recommended_crop|title }}</h2>
+                    
+                    <hr class="my-3 text-success">
+                    
+                    <h5 class="text-secondary mb-1">Forecasted Demand:</h5>
+                    <p class="fw-bold fs-4 mb-2">{{ recommendation.forecasted_demand_volume }} units</p>
+                    
+                    <h5 class="text-secondary mb-1">Optimal Listing Price:</h5>
+                    <p class="fw-bold fs-4 text-primary">₹{{ recommendation.suggested_price_per_kg }} / kg</p>
+                    
+                    <p class="text-secondary mt-2 small">Based on our closed-loop AI coupling agronomy with market economics.</p>
+                {% else %}
+                    <h3 class="fw-bold text-danger mb-3">Error</h3>
+                    <p class="text-secondary">{{ recommendation }}</p>
+                {% endif %}
             </div>
         </div>
         {% endif %}

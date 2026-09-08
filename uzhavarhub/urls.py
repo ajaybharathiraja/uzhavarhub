@@ -9,5 +9,6 @@ urlpatterns = [
     path('payments/', include('payments.urls')),
     path('reviews/', include('reviews.urls')),
     path('marketplace/', include('marketplace.urls')),
+    path('ai/', include('ai_services.urls')),
     path('', include('core.urls')),
 ]

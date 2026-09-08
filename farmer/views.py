@@ -200,8 +200,8 @@ def crop_recommendation_view(request):
             ph = float(request.POST.get('ph', 0))
             rainfall = float(request.POST.get('rainfall', 0))
             
-            from ai_services.analyzer import recommend_crop
-            recommendation = recommend_crop(n, p, k, temperature, humidity, ph, rainfall)
+            from ai_services.analyzer import get_integrated_market_strategy
+            recommendation = get_integrated_market_strategy(n, p, k, temperature, humidity, ph, rainfall)
         except Exception as e:
             recommendation = f"Error processing inputs: {str(e)}"
     return render(request, 'farmer/crop_recommendation.html', {'recommendation': recommendation})

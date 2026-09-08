@@ -1,0 +1,19 @@
+sequenceDiagram
+    participant Farmer
+    participant AI_Service as AI Analyzer (Django)
+    participant DB as PostgreSQL
+    participant Customer
+    
+    Farmer->>AI_Service: Request Crop Suggestion (Soil Data)
+    AI_Service-->>Farmer: Returns 'Rice' (RandomForest)
+    
+    Farmer->>AI_Service: Request Market Insights (Sales Data)
+    AI_Service-->>Farmer: Returns Demand Forecast (LinearReg)
+    
+    Farmer->>DB: Lists 'Rice' for Sale
+    
+    Customer->>DB: Browses Marketplace
+    Customer->>DB: Purchases 'Rice'
+    
+    Customer->>DB: Submits Review (5 Stars)
+    DB-->>Farmer: Review Notification
