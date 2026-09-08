@@ -32,11 +32,11 @@ DEBUG = True
 ALLOWED_HOSTS = ['.vercel.app', 'localhost', '127.0.0.1', '.loca.lt']
 CSRF_TRUSTED_ORIGINS = ['https://*.vercel.app', 'https://uzhavarhub.vercel.app']
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_NAME = 'uzhavar_csrftoken'
-SESSION_COOKIE_NAME = 'uzhavar_sessionid'
-CSRF_USE_SESSIONS = True
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_NAME = 'uzh_csrf_v3'
+SESSION_COOKIE_NAME = 'uzh_sess_v3'
+CSRF_USE_SESSIONS = False
 
 # Application definition
 
