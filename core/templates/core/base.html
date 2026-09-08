@@ -165,7 +165,7 @@
         {% endblock content %}
     </main>
 
-    {% if user.role != 'FARMER' %}
+    {% if user.role != 'FARMER' and request.resolver_match.app_name != 'accounts' %}
     <!-- Floating Cart Button -->
     <a href="{% url 'orders:view_cart' %}" id="floating-cart-btn" class="btn btn-success position-fixed shadow-lg rounded-circle d-flex align-items-center justify-content-center border-2 border-white" style="bottom: 30px; right: 30px; width: 65px; height: 65px; z-index: 1050; transition: transform 0.3s ease;">
         <span class="fs-2">🛒</span>
