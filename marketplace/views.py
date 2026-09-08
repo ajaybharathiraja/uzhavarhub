@@ -2,12 +2,16 @@ from django.shortcuts import render, get_object_or_404
 from .models import Product, Category
 from accounts.models import FarmerProfile
 
+from ai_services.analyzer import get_ai_product_recommendations
+
 def product_list(request):
     products = Product.objects.filter(is_active=True).select_related('farmer', 'category').order_by('-created_at')
     categories = Category.objects.all()
+    ai_recommendations = get_ai_product_recommendations(limit=4)
     return render(request, 'marketplace/product_list.html', {
         'products': products,
         'categories': categories,
+        'ai_recommendations': ai_recommendations,
         'title': 'Fresh Farm Products'
     })
 

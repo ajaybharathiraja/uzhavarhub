@@ -14,7 +14,14 @@
             <div class="row g-3">
                 {% for field in form %}
                     <div class="col-md-6 {% if field.name == 'description' %}col-md-12{% endif %} mb-3">
-                        <label class="form-label fw-semibold text-body">{{ field.label }}</label>
+                        <label class="form-label fw-semibold text-body d-flex justify-content-between align-items-center">
+                            {{ field.label }}
+                            {% if field.name == 'price' %}
+                            <button type="button" class="btn btn-sm btn-outline-success rounded-pill px-3 py-1 fw-bold ai-suggest-btn">
+                                ✨ AI Suggest Price
+                            </button>
+                            {% endif %}
+                        </label>
                         {{ field }}
                         {% if field.help_text %}
                             <div class="form-text small">{{ field.help_text }}</div>
@@ -32,4 +39,35 @@
         </form>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const suggestBtn = document.querySelector('.ai-suggest-btn');
+        if (suggestBtn) {
+            suggestBtn.addEventListener('click', function() {
+                const priceInput = document.querySelector('input[name="price"]');
+                // Optional: Gather category or other fields if available
+                const basePrice = 100.0; // In a real scenario, this might come from market data based on category
+                
+                // Show loading state
+                suggestBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...';
+                
+                fetch(`/farmer/ai-suggest-price/?base_price=${basePrice}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success && priceInput) {
+                            priceInput.value = data.suggested_price;
+                            // Add a green highlight to show it updated
+                            priceInput.classList.add('is-valid');
+                            setTimeout(() => priceInput.classList.remove('is-valid'), 2000);
+                        }
+                    })
+                    .catch(err => console.error(err))
+                    .finally(() => {
+                        suggestBtn.innerHTML = '✨ AI Suggest Price';
+                    });
+            });
+        }
+    });
+</script>
 {% endblock farmer_content %}

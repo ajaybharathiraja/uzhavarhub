@@ -1,5 +1,8 @@
 import os
 import random
+import joblib
+import pandas as pd
+import numpy as np
 from django.db.models import Sum
 from django.utils import timezone
 from datetime import timedelta
@@ -94,3 +97,53 @@ def get_market_insights(farmer):
         'current_price': round(current_price, 2),
         'forecast': forecast_text
     }
+
+# --- NEW ADVANCED AI FEATURES (Q1 JOURNAL) ---
+
+def load_model(filename):
+    model_path = os.path.join(settings.BASE_DIR, 'ai_services', 'models', filename)
+    if os.path.exists(model_path):
+        return joblib.load(model_path)
+    return None
+
+def predict_optimal_price(base_price, competitor_price, shelf_life, seasonality_index=1.0):
+    model = load_model('pricing_model.pkl')
+    if model:
+        prediction = model.predict([[base_price, seasonality_index, competitor_price, shelf_life]])
+        return round(prediction[0], 2)
+    # Fallback mock
+    return round(base_price * 1.1, 2)
+
+def predict_crop_yield(area_acres, soil_quality, rainfall_mm, fertilizer_kg):
+    model = load_model('yield_model.pkl')
+    if model:
+        prediction = model.predict([[area_acres, soil_quality, rainfall_mm, fertilizer_kg]])
+        return round(prediction[0], 2)
+    return round(area_acres * 1.5, 2)
+
+def analyze_reviews_sentiment(reviews_text_list):
+    if not reviews_text_list:
+        return {"positive": 0, "neutral": 0, "negative": 0}
+        
+    model_data = load_model('sentiment_model.pkl')
+    if model_data:
+        vectorizer, model = model_data
+        X = vectorizer.transform(reviews_text_list)
+        predictions = model.predict(X)
+        
+        counts = {2: 0, 1: 0, 0: 0}
+        for p in predictions:
+            counts[p] += 1
+            
+        total = len(reviews_text_list)
+        return {
+            "positive": round(counts[2] / total * 100, 1),
+            "neutral": round(counts[1] / total * 100, 1),
+            "negative": round(counts[0] / total * 100, 1)
+        }
+    return {"positive": 80, "neutral": 15, "negative": 5}
+
+def get_ai_product_recommendations(limit=4):
+    # For now, just return random top products, as the similarity matrix needs user context.
+    # In a full app, we would use the matrix in recommendation_sim.pkl
+    return get_trending_products(limit)

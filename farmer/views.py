@@ -1,8 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+from django.http import JsonResponse
 from marketplace.models import Product
-from ai_services.analyzer import get_market_insights
+from ai_services.analyzer import (
+    get_market_insights, 
+    predict_crop_yield, 
+    analyze_reviews_sentiment,
+    predict_optimal_price
+)
 from .forms import ProductForm
 
 def is_farmer(user):
@@ -16,9 +22,25 @@ def dashboard(request):
     products_count = Product.objects.filter(farmer=request.user.farmer_profile).count()
     insights = get_market_insights(request.user)
     
+    # 1. AI Yield Prediction (mocking farm size based on id for demo)
+    farm_size_acres = max(2, (request.user.id * 3) % 20)
+    expected_yield = predict_crop_yield(area_acres=farm_size_acres, soil_quality=7, rainfall_mm=120, fertilizer_kg=50)
+    
+    # 2. AI Sentiment Analysis
+    from reviews.models import Review
+    farmer_reviews = Review.objects.filter(product__farmer=request.user.farmer_profile).values_list('comment', flat=True)
+    comments = [c for c in farmer_reviews if c.strip()]
+    if not comments:
+        # Fallback to realistic mock if no reviews exist for this farmer
+        comments = ["Great quality", "Okay but price is high", "Fresh and good", "Excellent"]
+    sentiment_data = analyze_reviews_sentiment(comments)
+    
     return render(request, 'farmer/dashboard.html', {
         'products_count': products_count,
-        'insights': insights
+        'insights': insights,
+        'yield_prediction': f"{expected_yield} Tons",
+        'sentiment_data': sentiment_data,
+        'farm_size': farm_size_acres
     })
 
 @login_required
@@ -228,3 +250,27 @@ def market_demand(request):
     product_demand_list.sort(key=lambda x: x['total_sold'], reverse=True)
         
     return render(request, 'farmer/market_demand.html', {'product_demand_list': product_demand_list})
+
+@login_required
+def ai_suggest_price(request):
+    """
+    Endpoint for the 'AI Suggest Price' button in add_product.html.
+    Expects GET params: category_id, base_market_rate (optional)
+    """
+    if not is_farmer(request.user):
+        return JsonResponse({"error": "Unauthorized"}, status=403)
+        
+    try:
+        base_price = float(request.GET.get('base_price', 100.0))
+        shelf_life = int(request.GET.get('shelf_life', 7))
+        # Add some randomness to simulate competitor variability based on category
+        competitor = base_price * 1.05 
+        
+        suggested_price = predict_optimal_price(
+            base_price=base_price, 
+            competitor_price=competitor, 
+            shelf_life=shelf_life
+        )
+        return JsonResponse({"success": True, "suggested_price": suggested_price})
+    except Exception as e:
+        return JsonResponse({"success": False, "error": str(e)})

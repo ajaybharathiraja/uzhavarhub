@@ -15,4 +15,5 @@ urlpatterns = [
     path('settings/', views.farmer_settings, name='settings'),
     path('crop-recommendation/', views.crop_recommendation_view, name='crop_recommendation'),
     path('market-demand/', views.market_demand, name='market_demand'),
+    path('ai-suggest-price/', views.ai_suggest_price, name='ai_suggest_price'),
 ]
