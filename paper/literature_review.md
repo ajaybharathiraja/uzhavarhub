@@ -1,31 +1,32 @@
-# Literature Review & Novelty Statement
+# Literature Review
 
-## Novelty Statement
-Recent advancements in agricultural technology have focused extensively on isolated machine learning solutions—either optimizing crop recommendations using soil parameters or improving post-harvest logistics via demand forecasting. E-commerce platforms for agriculture exist but are largely decoupled from precision agronomy. **The core novelty of UzhavarHub lies in its integrated architectural approach: it unifies machine learning-driven crop recommendation with demand forecasting directly inside a farmer-to-consumer digital marketplace.** By embedding predictive analytics into the seller workflow (guiding farmers on *what* to grow based on soil and *how to price* based on dynamic demand), UzhavarHub bridges the gap between precision agriculture and agricultural economics in a single, closed-loop platform tailored for regional markets.
+This document provides an overview of the 20 verified academic sources that form the theoretical foundation for UzhavarHub. The review is categorized into three core domains: Crop Recommendation, Demand Forecasting & Supply Chain, and System Usability in Agriculture.
 
-## Literature Comparison
+### 1. Crop Recommendation via Machine Learning
+Machine learning has proven highly effective at determining agronomic viability based on soil metrics.
+- **Senapaty et al. (2024)** explored a Decision Support System utilizing classification algorithms (like Random Forest), demonstrating the high separability of N, P, K data for crop recommendations (10.3390/agriculture14081256).
+- **Ragavan & Menaka (2026)** presented an AI-Based Crop Recommendation System that further validates the scalability of Random Forest approaches in agriculture (10.17148/IARJSET.2026.13325).
+- **Garg & Alam (2023)** developed an effective wrapper-based machine learning technique to optimize crop selection and prevent soil degradation (10.19101/IJATEE.2022.10100456).
 
-| Reference | Domain | Method/Algorithm | Dataset / Context | Reported Metric | Gap Addressed by UzhavarHub |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| Kumar et al. (2023) [1] | Crop Recommendation | Random Forest | India Soil Dataset | 99% Accuracy | Lacks market integration; focuses solely on yield. |
-| Sharma & Singh (2022) [2] | Crop Recommendation | SVM & Decision Trees | N/A | 95% Accuracy | Only suggests crops without considering profitability or demand. |
-| Reddy et al. (2024) [3] | Crop Recommendation | Deep Learning (ANN) | Kaggle Crop Dataset | 97.5% Accuracy | High computational cost; not integrated into farmer workflows. |
-| Patel et al. (2021) [4] | Crop Recommendation | Ensembles | regional soil data | 96% Accuracy | Standalone tool; no e-commerce linkage. |
-| Gupta et al. (2023) [5] | Demand Forecasting | LSTM | Agri-market prices | RMSE: 12.4 | Complex model; no direct link to crop planning. |
-| Zhang et al. (2022) [6] | Demand Forecasting | XGBoost | Retail e-commerce | R²: 0.85 | General retail focus, missing perishability context. |
-| Mishra & Dash (2023) [7] | Demand Forecasting | ARIMA & RF | APMC market data | RMSE: 24.5 | Only forecasts wholesale prices; ignores direct-to-consumer channels. |
-| Li et al. (2024) [8] | Demand Forecasting | Hybrid DL | China Agri-markets | MAE: 10.2 | Limited accessibility for individual farmers. |
-| Wang & Liu (2022) [9] | Agri E-Commerce | Platform Architecture | B2C Logistics | Case Study | Focuses on logistics rather than farm-level planning. |
-| Deshmukh (2023) [10] | Agri E-Commerce | Supply Chain analysis | India D2C | Survey (N=200) | No integrated predictive analytics for sellers. |
-| Singh et al. (2021) [11] | Agri E-Commerce | Blockchain | Supply Chain Trust | Case Study | Focuses on traceability, not market demand insights. |
-| Ali et al. (2022) [12] | Agri E-Commerce | Recommender Sys | User ratings | Precision: 88% | Consumer-facing only; no farmer-facing AI. |
-| Jain et al. (2024) [13] | Integrated Systems | IoT + ML | Smart Farming IoT | 92% Acc | Hardware-dependent; high barrier to entry. |
-| Rahman et al. (2023) [14] | Integrated Systems | Cloud architecture | Bangladesh Agri | Theoretical | No empirical evaluation of the ML components. |
-| Chen et al. (2022) [15] | Price Prediction | SVR | Global commodities | R²: 0.78 | Macro-economic focus, not useful for micro-level farm pricing. |
-| Rao et al. (2021) [16] | Price Prediction | Random Forest | Tomato prices | RMSE: 15.6 | Single-crop specific. |
-| Prasad et al. (2023) [17] | Market Insights | Dashboards | FPO data | Qualitative | No automated ML forecasting. |
-| Das & Kumar (2024) [18] | Crop Recommendation | KNN + NB | Public Datasets | 91% Accuracy | Outdated algorithms; no real-world application layer. |
-| Zhao et al. (2023) [19] | Demand Forecasting | Prophet | Fresh Produce | MAPE: 14% | Purely statistical; ignores real-time e-commerce signals. |
-| Nandi et al. (2022) [20] | Agri E-Commerce | Mobile App Design | India Farmers | Usability (SUS) | UI/UX focus only; lacks data-driven intelligence. |
+### 2. Demand Forecasting and Supply Chain Management
+Moving beyond agronomy, predicting market demand and supply chain logistics is critical.
+- **Chelliah, Latchoumi, & Senthilselvi (2024)** utilized machine learning for agricultural demand forecasting, highlighting the challenges of predicting volatile agricultural markets (10.1007/s10668-022-02783-9).
+- **Saxena et al. (2023)** explored the broader optimization of agricultural supply chains, noting the necessity of route optimization and inventory management (10.53555/jaz.v44iS2.1546).
+- **Asfoura, Kassem, & Aljabari (2026)** investigated the specific role of AI in demand forecasting, proposing conceptual frameworks applicable to retail and supply (10.37965/jait.2026.1171).
+- **Krishna et al. (2026)** applied XGBoost for agricultural price forecasting in India, integrating environmental and economic factors to predict major food crop prices (10.3390/blsf2025054007).
+- **Bhamare, Raj, & Bansal (2026)** proposed an optimal approach for market-based harvesting time forecasting using Neural Prediction Mechanisms (10.14445/23488549/IJECE-V13I2P113).
+- **Guo & Wang (2023)** provided a comprehensive review of predicting agricultural commodities prices, mapping the transition from traditional ARIMA to modern ML architectures (10.48550/arXiv.2310.18646).
+- **Satpathy & Dash (2022)** presented a case study on brinjal forecasting in Odisha, demonstrating that ML techniques handle non-linear market patterns better than ARIMA (10.1371/journal.pone.0270553).
+- **Kumar & Sharma (2023)** reviewed the application of hybrid ML and ARIMA models in agricultural market price prediction (10.64388/IREV9I5-1711906).
+- **Lestari et al. (2025)** examined ensemble models to forecast highly volatile agricultural commodity prices under macroeconomic pressure (10.28991/HEF-2025-06-04-09).
+- **Jha, Doshi, & Patel (2023)** presented a roadmap for AI applications in agriculture supply chains, emphasizing deep learning and food safety (10.1007/s10479-023-05556-3).
+- **Sharma, Kamble, & Gunasekaran (2020)** conducted a systematic literature review on ML applications for sustainable agriculture supply chain performance (10.1016/j.cor.2020.104926).
+- **Li, Guo, & Jin (2022)** utilized Double Machine Learning to evaluate the digital economy's impact on agricultural resilience (10.1108/IJOPM-11-2022-0737).
+- **Priyadarshini et al. (2026)** discussed the direct development of smart agricultural marketplaces equipped with ML-based price forecasting (10.51583/IJLTEMAS.2026.1502000).
 
-*(Note: References [1]–[20] correspond to entries in `references.bib`)*
+### 3. System Usability Scale (SUS) in E-Commerce & Agriculture
+To validate the effectiveness of the UzhavarHub platform, we draw upon standard Human-Computer Interaction (HCI) methodologies.
+- **Putra & Pratama (2026)** demonstrated the use of the SUS method to evaluate self-service systems within e-commerce mobile applications (10.33022/ijcs.v13i4.4258).
+- **Syahputra et al. (2021)** evaluated the usability of a coconut export agribusiness website using the System Usability Scale, proving its efficacy in the B2B agriculture sector (10.29103/sisfo.v10i2.27005).
+- **Adhi & Irianto (2026)** evaluated a smart agriculture prototype using the SUS method, highlighting learnability issues among farmers (10.35842/ijicom.v8i1.173).
+- **Budiastuti, Ritchi, & Deliana (2023)** conducted a usability analysis of digital agricultural product marketing platforms specifically targeting the farmer level (10.15294/sji.v10i3.44605).

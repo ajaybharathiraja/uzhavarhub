@@ -32,3 +32,20 @@ class AIServicesTests(TestCase):
         crop = recommend_crop(104, 18, 30, 23.6, 60.3, 6.7, 140.91)
         self.assertIsInstance(crop, str)
         self.assertNotEqual(crop, 'Unknown', "Crop recommendation failed to predict")
+
+    def test_integrated_strategy_api(self):
+        from django.test import Client
+        from django.urls import reverse
+        client = Client()
+        response = client.get('/ai/api/integrated-strategy/?n=90&p=42&k=43&temperature=20.8&humidity=82.0&ph=6.5&rainfall=202.9')
+        self.assertEqual(response.status_code, 200)
+        
+        response_data = json.loads(response.content)
+        self.assertEqual(response_data['status'], 'success')
+        self.assertIn('recommended_crop', response_data['data'])
+        
+    def test_integrated_strategy_api_error(self):
+        from django.test import Client
+        client = Client()
+        response = client.get('/ai/api/integrated-strategy/?n=invalid')
+        self.assertEqual(response.status_code, 400)

@@ -1,20 +1,32 @@
 import numpy as np
+import pandas as pd
+import os
 
 # PENDING DATA COLLECTION
 # Once you have collected the 10-question responses from your N=15 participants,
-# replace these empty arrays with the actual integer responses (1-5).
-# Each sub-array represents one participant's 10 answers.
-responses = [
-    # [5, 1, 5, 1, 5, 1, 5, 1, 5, 1], # Example of a perfect score (100)
-    # [1, 5, 1, 5, 1, 5, 1, 5, 1, 5], # Example of the worst score (0)
-]
+# replace the '[AWAITING REAL PARTICIPANT DATA]' placeholder in sus_responses.csv
+# with the actual integer responses (1-5).
+CSV_PATH = os.path.join(os.path.dirname(__file__), 'sus_responses.csv')
 
-def calculate_sus(responses):
-    if not responses:
-        return "PENDING: No data collected yet."
-        
+def calculate_sus():
+    if not os.path.exists(CSV_PATH):
+        return "PENDING: sus_responses.csv not found."
+    
+    df = pd.read_csv(CSV_PATH)
+    
+    # Filter out placeholder rows
+    df = df[df['Participant_ID'] != '[AWAITING REAL PARTICIPANT DATA]']
+    
+    if len(df) == 0:
+        return "PENDING: No data collected yet. Please fill sus_responses.csv with real participant data."
+    
     scores = []
-    for resp in responses:
+    for index, row in df.iterrows():
+        try:
+            resp = [int(row[f'Q{i}']) for i in range(1, 11)]
+        except ValueError:
+            return f"ERROR: Invalid data in row {index}. Responses must be integers 1-5."
+            
         if len(resp) != 10:
             raise ValueError("Each response must have exactly 10 answers.")
             
@@ -49,7 +61,7 @@ def calculate_sus(responses):
     }
 
 if __name__ == "__main__":
-    result = calculate_sus(responses)
+    result = calculate_sus()
     print("--- SUS Evaluation Results ---")
     if isinstance(result, str):
         print(result)

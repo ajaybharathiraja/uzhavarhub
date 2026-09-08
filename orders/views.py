@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import JsonResponse
 from marketplace.models import Product
-from .models import Cart, CartItem
+from .models import Cart, CartItem, Order, OrderItem
 
 @login_required
 def view_cart(request):
@@ -69,7 +69,7 @@ def checkout(request):
             OrderItem.objects.create(
                 order=order,
                 product=cart_item.product,
-                farmer=cart_item.product.farmer,
+                farmer=cart_item.product.farmer.user,
                 quantity=cart_item.quantity,
                 price_at_purchase=cart_item.product.price
             )

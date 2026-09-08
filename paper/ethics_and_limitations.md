@@ -1,5 +1,11 @@
 # Ethics, Limitations, and Data Privacy
 
+## Human-Subjects Research and Informed Consent
+The empirical evaluation of UzhavarHub involves a System Usability Scale (SUS) study conducted with human participants (farmers and consumers).
+- **Informed Consent:** Prior to participation, all users are provided with a clear explanation of the study's purpose, the nature of the tasks, and are required to give explicit informed consent.
+- **Voluntary Participation:** Participation is strictly voluntary, and users may withdraw from the study at any time without penalty or loss of benefits.
+- **Anonymization:** All usability data and survey responses are collected anonymously. Participant identities are not linked to their SUS scores or interaction logs, ensuring full privacy and confidentiality in our published results.
+
 ## Data Privacy and Security
 UzhavarHub collects essential personal information to facilitate agricultural e-commerce: names, locations, contact information, order histories, and payment details. 
 - **Security:** Passwords are hashed using Django’s robust PBKDF2 algorithm. Session tokens manage authentication to prevent unauthorized access.

@@ -1,0 +1,35 @@
+{
+    "Condition_A_With_Demand": {
+        "Features": [
+            "day_of_year",
+            "month",
+            "is_weekend",
+            "quantity",
+            "Demand"
+        ],
+        "Test_RMSE_Mean": 192.1731461112039,
+        "Test_R2_Mean": -0.29046009895313335
+    },
+    "Condition_B_Without_Demand": {
+        "Features": [
+            "day_of_year",
+            "month",
+            "is_weekend",
+            "quantity"
+        ],
+        "Test_RMSE_Mean": 192.75438142963444,
+        "Test_R2_Mean": -0.2981950699266075
+    },
+    "Statistical_Significance": {
+        "RMSE_B_vs_A": {
+            "p_value": 0.23387275272517832,
+            "cohens_d": 0.6264674386190722,
+            "interpretation": "Positive Cohen's d means removing Demand increased RMSE (worse error)."
+        },
+        "R2_A_vs_B": {
+            "p_value": 0.24130879009609385,
+            "cohens_d": 0.614625469214927,
+            "interpretation": "Positive Cohen's d means adding Demand increased R2 (better fit)."
+        }
+    }
+}
