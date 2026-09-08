@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import AuthenticationForm
+from django.views.decorators.cache import never_cache
 from .forms import CustomUserCreationForm
 from .models import CustomerProfile, FarmerProfile
 
+@never_cache
 def signup_view(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
@@ -20,6 +22,7 @@ def signup_view(request):
         form = CustomUserCreationForm()
     return render(request, 'accounts/signup.html', {'form': form})
 
+@never_cache
 def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(data=request.POST)
