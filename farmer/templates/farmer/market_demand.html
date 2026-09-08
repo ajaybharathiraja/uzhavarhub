@@ -18,6 +18,7 @@
                         <th scope="col" class="py-3 px-4 text-uppercase fw-semibold text-muted text-nowrap">Product</th>
                         <th scope="col" class="py-3 px-4 text-uppercase fw-semibold text-muted text-nowrap">Category</th>
                         <th scope="col" class="py-3 px-4 text-uppercase fw-semibold text-muted text-nowrap">Price / Unit</th>
+                        <th scope="col" class="py-3 px-4 text-uppercase fw-semibold text-muted text-nowrap">✨ AI Predicted Price</th>
                         <th scope="col" class="py-3 px-4 text-uppercase fw-semibold text-muted text-nowrap">Demand Level</th>
                         <th scope="col" class="py-3 px-4 text-uppercase fw-semibold text-muted text-nowrap">Units Sold (30d)</th>
                     </tr>
@@ -30,6 +31,14 @@
                             <span class="badge bg-body-tertiary text-body border">{{ item.product.category.name }}</span>
                         </td>
                         <td class="py-3 px-4 text-success fw-bold">₹{{ item.product.price }} / {{ item.product.unit }}</td>
+                        <td class="py-3 px-4 text-primary fw-bold">
+                            ₹{{ item.ai_suggested_price }} / {{ item.product.unit }}
+                            {% if item.ai_suggested_price > item.product.price %}
+                                <span class="badge bg-success-subtle text-success ms-1">↑</span>
+                            {% elif item.ai_suggested_price < item.product.price %}
+                                <span class="badge bg-danger-subtle text-danger ms-1">↓</span>
+                            {% endif %}
+                        </td>
                         <td class="py-3 px-4">
                             <span class="badge bg-{{ item.demand_color }}-subtle text-{{ item.demand_color }} border border-{{ item.demand_color }} rounded-pill px-3 py-2">
                                 {% if item.demand_level == 'High' %}🔥{% elif item.demand_level == 'Medium' %}📊{% else %}📉{% endif %}
@@ -40,7 +49,7 @@
                     </tr>
                     {% empty %}
                     <tr>
-                        <td colspan="5" class="text-center py-5 text-muted">No products available at the moment.</td>
+                        <td colspan="6" class="text-center py-5 text-muted">No products available at the moment.</td>
                     </tr>
                     {% endfor %}
                 </tbody>

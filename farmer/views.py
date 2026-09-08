@@ -238,12 +238,21 @@ def market_demand(request):
         else:
             demand_level = 'Low'
             demand_color = 'danger' # red
-            
+        try:
+            suggested_price = predict_optimal_price(
+                base_price=float(product.price),
+                competitor_price=float(product.price) * 1.05,
+                shelf_life=7
+            )
+        except Exception:
+            suggested_price = float(product.price)
+
         product_demand_list.append({
             'product': product,
             'total_sold': total_sold,
             'demand_level': demand_level,
-            'demand_color': demand_color
+            'demand_color': demand_color,
+            'ai_suggested_price': round(suggested_price, 2)
         })
         
     # Sort by total sold descending
