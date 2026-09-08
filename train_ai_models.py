@@ -1,224 +1,145 @@
 import os
-import django
+import json
 import joblib
 import pandas as pd
 import numpy as np
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
-from sklearn.linear_model import LinearRegression
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.naive_bayes import MultinomialNB
-from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+import warnings
+warnings.filterwarnings('ignore')
 
-# Setup Django environment so we can query database if needed later
+import django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'uzhavarhub.settings')
 django.setup()
 
-def train_crop_recommendation_model():
-    print("Training Crop Recommendation Model...")
-    
-    # Generate Synthetic Dataset for Tamil Nadu crops
-    # N, P, K, temperature, humidity, ph, rainfall -> crop
-    np.random.seed(42)
-    
-    # Crops: Rice, Mango, Coconut, Turmeric, Carrot, Egg (mock)
-    # We will simulate standard optimal ranges for these
-    data = []
-    
-    # Rice (Thanjavur Ponni Rice): High NPK, High Temp, High Rainfall
-    for _ in range(200):
-        data.append([
-            np.random.randint(60, 100), np.random.randint(35, 60), np.random.randint(35, 55),
-            np.random.uniform(20, 35), np.random.uniform(75, 95), np.random.uniform(5.5, 7.5),
-            np.random.uniform(150, 250), 'Rice'
-        ])
-        
-    # Mango (Salem Mangoes): Mod NPK, High Temp, Mod Rainfall
-    for _ in range(200):
-        data.append([
-            np.random.randint(20, 40), np.random.randint(15, 35), np.random.randint(25, 45),
-            np.random.uniform(25, 40), np.random.uniform(45, 65), np.random.uniform(5.0, 7.0),
-            np.random.uniform(70, 100), 'Mango'
-        ])
-        
-    # Coconut (Pollachi Coconuts): Mod N, High K, Mod Temp, High Rainfall
-    for _ in range(200):
-        data.append([
-            np.random.randint(20, 40), np.random.randint(10, 30), np.random.randint(50, 80),
-            np.random.uniform(25, 35), np.random.uniform(80, 95), np.random.uniform(5.2, 8.0),
-            np.random.uniform(120, 220), 'Coconut'
-        ])
-        
-    # Turmeric (Erode Turmeric): Mod NPK, Mod Temp, Mod Rainfall
-    for _ in range(200):
-        data.append([
-            np.random.randint(30, 60), np.random.randint(30, 60), np.random.randint(30, 60),
-            np.random.uniform(20, 35), np.random.uniform(60, 80), np.random.uniform(5.5, 7.5),
-            np.random.uniform(100, 150), 'Turmeric'
-        ])
-        
-    # Carrot (Ooty Carrots): Mod NPK, Low Temp, Mod Rainfall
-    for _ in range(200):
-        data.append([
-            np.random.randint(10, 30), np.random.randint(30, 60), np.random.randint(20, 40),
-            np.random.uniform(10, 20), np.random.uniform(50, 70), np.random.uniform(5.5, 7.0),
-            np.random.uniform(80, 120), 'Carrot'
-        ])
+evaluation_results = {}
 
-    df = pd.DataFrame(data, columns=['N', 'P', 'K', 'temperature', 'humidity', 'ph', 'rainfall', 'crop'])
+def train_crop_recommendation_model():
+    print("\n--- Training Crop Recommendation Model ---")
+    csv_path = 'data/processed/crop_recommendation.csv'
+    if not os.path.exists(csv_path):
+        print(f"ERROR: {csv_path} not found.")
+        return
+        
+    df = pd.read_csv(csv_path)
+    X = df[['N', 'P', 'K', 'temperature', 'humidity', 'ph', 'rainfall']]
+    y = df['label']
     
-    X = df.drop('crop', axis=1)
-    y = df['crop']
+    # 80/20 stratified split
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
     
-    model = RandomForestClassifier(n_estimators=100, random_state=42)
-    model.fit(X, y)
+    # Baseline 1: Logistic Regression
+    lr = LogisticRegression(max_iter=1000, random_state=42)
+    lr.fit(X_train, y_train)
+    lr_preds = lr.predict(X_test)
+    lr_acc = accuracy_score(y_test, lr_preds)
     
-    # Save model
+    # Baseline 2: KNN
+    knn = KNeighborsClassifier(n_neighbors=5)
+    knn.fit(X_train, y_train)
+    knn_preds = knn.predict(X_test)
+    knn_acc = accuracy_score(y_test, knn_preds)
+    
+    # Advanced Model: Random Forest
+    rf = RandomForestClassifier(n_estimators=100, random_state=42)
+    rf.fit(X_train, y_train)
+    rf_preds = rf.predict(X_test)
+    
+    acc = accuracy_score(y_test, rf_preds)
+    prec = precision_score(y_test, rf_preds, average='macro', zero_division=0)
+    rec = recall_score(y_test, rf_preds, average='macro', zero_division=0)
+    f1 = f1_score(y_test, rf_preds, average='macro', zero_division=0)
+    cm = confusion_matrix(y_test, rf_preds).tolist()
+    
+    evaluation_results['Crop_Recommendation'] = {
+        'Baseline_LR_Accuracy': float(lr_acc),
+        'Baseline_KNN_Accuracy': float(knn_acc),
+        'RF_Accuracy': float(acc),
+        'RF_Precision_Macro': float(prec),
+        'RF_Recall_Macro': float(rec),
+        'RF_F1_Macro': float(f1),
+        'Confusion_Matrix': cm
+    }
+    
     os.makedirs('ai_services/models', exist_ok=True)
-    joblib.dump(model, 'ai_services/models/crop_model.pkl')
-    print("Crop Recommendation Model trained and saved successfully.")
+    joblib.dump(rf, 'ai_services/models/crop_model.pkl')
+    print("Crop model saved. Metrics logged.")
 
 
 def train_demand_forecasting_model():
-    print("Training Demand Forecasting Model...")
-    # Generate Synthetic Historical Sales Data
-    # Features: day_of_year, month, is_weekend, previous_day_sales -> today_sales
+    print("\n--- Training Demand Forecasting Model ---")
+    demand_path = 'data/processed/demand_forecasting.csv'
+    ecommerce_path = 'data/processed/ecommerce_sales.csv'
     
-    np.random.seed(42)
-    days = 365
+    if not os.path.exists(demand_path) or not os.path.exists(ecommerce_path):
+        print("ERROR: Demand or Ecommerce processed datasets not found.")
+        return
+        
+    df_demand = pd.read_csv(demand_path)
+    df_ecom = pd.read_csv(ecommerce_path)
     
-    # Base trend + seasonality (e.g. higher in certain months) + random noise
-    X = []
-    y = []
+    # Preprocess demand date
+    if 'Date' in df_demand.columns:
+        df_demand['date'] = pd.to_datetime(df_demand['Date'])
     
-    # Let's create a simple time series
-    for i in range(1, days):
-        day_of_year = i % 365
-        month = (i // 30) % 12 + 1
-        is_weekend = 1 if (i % 7) >= 5 else 0
+    # Preprocess ecom date
+    if 'order_date' in df_ecom.columns:
+        df_ecom['date'] = pd.to_datetime(df_ecom['order_date'], errors='coerce')
         
-        # Artificial sales calculation
-        base_sales = 50
-        seasonality = np.sin(2 * np.pi * day_of_year / 365) * 20
-        weekend_boost = 15 if is_weekend else 0
-        noise = np.random.normal(0, 5)
-        
-        today_sales = max(10, base_sales + seasonality + weekend_boost + noise)
-        
-        if i > 1:
-            X.append([day_of_year, month, is_weekend, prev_sales])
-            y.append(today_sales)
-            
-        prev_sales = today_sales
-
+    # Standardize category names for join
+    df_demand['category'] = df_demand['Category'].str.lower()
+    df_ecom['category'] = df_ecom['product_category'].str.lower()
+    
+    # Extract date features
+    df_demand['day_of_year'] = df_demand['date'].dt.dayofyear
+    df_demand['month'] = df_demand['date'].dt.month
+    df_demand['is_weekend'] = (df_demand['date'].dt.dayofweek >= 5).astype(int)
+    
+    # Sort and shift for lag on 'Demand'
+    df_demand = df_demand.sort_values(by=['Product ID', 'date'])
+    df_demand['prev_demand'] = df_demand.groupby(['Product ID'])['Demand'].shift(1)
+    df_demand = df_demand.dropna(subset=['prev_demand'])
+    
+    # Join with ecommerce data aggregated by date and category
+    df_ecom_daily = df_ecom.groupby(['date', 'category'])['quantity'].sum().reset_index()
+    df_joined = pd.merge(df_demand, df_ecom_daily, on=['date', 'category'], how='left')
+    df_joined['quantity'] = df_joined['quantity'].fillna(0)
+    
+    # Features and Target
+    feature_cols = ['day_of_year', 'month', 'is_weekend', 'prev_demand', 'Price', 'Discount']
+    X = df_joined[feature_cols]
+    y = df_joined['Demand']
+    
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    
     model = LinearRegression()
-    model.fit(X, y)
+    model.fit(X_train, y_train)
+    y_pred = model.predict(X_test)
+    
+    rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+    mae = mean_absolute_error(y_test, y_pred)
+    r2 = r2_score(y_test, y_pred)
+    
+    evaluation_results['Demand_Forecasting'] = {
+        'Model_Type': 'LinearRegression',
+        'Test_RMSE': float(rmse),
+        'Test_MAE': float(mae),
+        'Test_R2': float(r2)
+    }
     
     joblib.dump(model, 'ai_services/models/demand_model.pkl')
-    print("Demand Forecasting Model trained and saved successfully.")
-
-
-def train_dynamic_pricing_model():
-    print("Training Dynamic Pricing Model...")
-    np.random.seed(42)
-    # Features: base_market_price, seasonality_index, competitor_price, shelf_life_days -> optimal_price
-    X = []
-    y = []
-    for _ in range(500):
-        base_price = np.random.uniform(20, 200)
-        seasonality = np.random.uniform(0.8, 1.5) # 1.0 is normal, 1.5 is high demand
-        competitor = base_price * np.random.uniform(0.9, 1.2)
-        shelf_life = np.random.randint(1, 30)
-        
-        # Optimal price drops if shelf life is low, increases if high demand or competitor is high
-        optimal_price = base_price * seasonality
-        if shelf_life < 5:
-            optimal_price *= 0.8 # discount to sell fast
-        optimal_price = (optimal_price + competitor) / 2
-        
-        X.append([base_price, seasonality, competitor, shelf_life])
-        y.append(optimal_price)
-        
-    model = RandomForestRegressor(n_estimators=50, random_state=42)
-    model.fit(X, y)
-    joblib.dump(model, 'ai_services/models/pricing_model.pkl')
-    print("Dynamic Pricing Model trained and saved.")
-
-def train_yield_prediction_model():
-    print("Training Yield Prediction Model...")
-    np.random.seed(42)
-    # Features: area_acres, soil_quality_index(1-10), rainfall_mm, fertilizer_kg -> yield_tons
-    X = []
-    y = []
-    for _ in range(500):
-        area = np.random.uniform(1, 50)
-        soil = np.random.uniform(1, 10)
-        rain = np.random.uniform(50, 300)
-        fert = area * np.random.uniform(10, 50)
-        
-        # Yield is roughly proportional to area, boosted by soil and rain (up to a point)
-        yield_tons = area * (soil / 5) * (rain / 100) * 1.5
-        yield_tons += np.random.normal(0, yield_tons * 0.1) # noise
-        yield_tons = max(0.1, yield_tons)
-        
-        X.append([area, soil, rain, fert])
-        y.append(yield_tons)
-        
-    model = RandomForestRegressor(n_estimators=50, random_state=42)
-    model.fit(X, y)
-    joblib.dump(model, 'ai_services/models/yield_model.pkl')
-    print("Yield Prediction Model trained and saved.")
-
-def train_review_sentiment_model():
-    print("Training Review Sentiment Model...")
-    # Very basic sentiment dataset
-    reviews = [
-        "This rice is amazing, very fresh and good quality.",
-        "Loved the mangoes, sweet and delivered on time.",
-        "Excellent packaging and great taste.",
-        "Okay product, nothing special.",
-        "Average quality, could be better.",
-        "It was decent, but price is high.",
-        "Terrible quality, completely rotten.",
-        "Very bad experience, eggs were broken.",
-        "Do not buy this, waste of money."
-    ]
-    # 2: Positive, 1: Neutral, 0: Negative
-    sentiments = [2, 2, 2, 1, 1, 1, 0, 0, 0]
-    
-    vectorizer = CountVectorizer()
-    X = vectorizer.fit_transform(reviews)
-    model = MultinomialNB()
-    model.fit(X, sentiments)
-    
-    joblib.dump((vectorizer, model), 'ai_services/models/sentiment_model.pkl')
-    print("Sentiment Model trained and saved.")
-
-def train_product_recommendation_model():
-    print("Training Product Recommendation Model (Content-Based mock)...")
-    # In a real app, this would query the DB. We'll just create a mock similarity matrix.
-    # Features: Category, Price range, Organic flag
-    mock_products = pd.DataFrame({
-        'id': range(1, 11),
-        'category_id': [1, 1, 2, 2, 3, 3, 4, 4, 1, 2],
-        'is_organic': [1, 0, 1, 1, 0, 0, 1, 0, 1, 0],
-        'price': [50, 40, 120, 150, 30, 25, 200, 180, 60, 130]
-    })
-    
-    # Simple similarity based on same category and organic flag
-    features = mock_products[['category_id', 'is_organic', 'price']]
-    # Normalize price
-    features['price'] = features['price'] / features['price'].max()
-    
-    similarity_matrix = cosine_similarity(features)
-    joblib.dump(similarity_matrix, 'ai_services/models/recommendation_sim.pkl')
-    print("Recommendation similarity matrix saved.")
+    print("Demand forecasting model saved. Metrics logged.")
 
 
 if __name__ == '__main__':
     train_crop_recommendation_model()
     train_demand_forecasting_model()
-    train_dynamic_pricing_model()
-    train_yield_prediction_model()
-    train_review_sentiment_model()
-    train_product_recommendation_model()
-
+    
+    os.makedirs('ai_services/models', exist_ok=True)
+    with open('ai_services/models/evaluation_results.json', 'w') as f:
+        json.dump(evaluation_results, f, indent=4)
+    print("\nSaved evaluation metrics to ai_services/models/evaluation_results.json")
