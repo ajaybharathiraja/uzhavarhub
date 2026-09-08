@@ -36,7 +36,7 @@ CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_NAME = 'uzhavar_csrftoken'
 SESSION_COOKIE_NAME = 'uzhavar_sessionid'
-
+CSRF_USE_SESSIONS = True
 
 # Application definition
 
