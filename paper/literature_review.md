@@ -30,3 +30,7 @@ To validate the effectiveness of the UzhavarHub platform, we draw upon standard 
 - **Syahputra et al. (2021)** evaluated the usability of a coconut export agribusiness website using the System Usability Scale, proving its efficacy in the B2B agriculture sector (10.29103/sisfo.v10i2.27005).
 - **Adhi & Irianto (2026)** evaluated a smart agriculture prototype using the SUS method, highlighting learnability issues among farmers (10.35842/ijicom.v8i1.173).
 - **Budiastuti, Ritchi, & Deliana (2023)** conducted a usability analysis of digital agricultural product marketing platforms specifically targeting the farmer level (10.15294/sji.v10i3.44605).
+
+### 4. Technology Adoption and Sustainability in South Asian Agriculture
+Understanding how AI technologies are adopted by farmers in developing regions is crucial for sustainable transformation.
+- **Huda et al. (2026)** investigated AI adoption in agriculture across six South Asian countries by integrating the Technology Acceptance Model (TAM) and Diffusion of Innovation (DOI) frameworks. Their comparative study of over 30 AI-enabled firms revealed that India and Sri Lanka exhibit DOI-driven institutional diffusion, whereas Bangladesh and Nepal depend on TAM-based individual acceptance. The research underscores the necessity of targeted policies, digital literacy, and infrastructure to scale AI for environmental sustainability and productivity (10.1016/j.sftr.2025.101620).

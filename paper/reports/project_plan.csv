@@ -1,0 +1,5 @@
+Milestone,Deliverable,Status
+Milestone 1: Platform Foundation,Working Django backend & Auth system,Completed
+Milestone 2: AI Model Development,Trained pkl models (accuracy >90%),Completed
+Milestone 3: E-Commerce Integration,Functional marketplace & order flow,Completed
+Milestone 4: Evaluation & Paper Drafting,SUS results/Ablation/Manuscript,In Progress

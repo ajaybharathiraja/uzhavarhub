@@ -91,7 +91,7 @@
 </div>
 
 <div class="row g-4 mt-2 mb-5">
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="card border-0 shadow-sm rounded-4 h-100" style="background: linear-gradient(135deg, #fef3c7 0%, #fefce8 100%);">
             <div class="card-body p-4 p-md-5">
                 <div class="d-flex align-items-center mb-3">
@@ -99,7 +99,7 @@
                     <h4 class="fw-black text-warning-emphasis mb-0">AI Yield Predictor</h4>
                 </div>
                 <p class="text-muted mb-4">Based on your farm size ({{ farm_size }} acres), typical soil quality, and current weather patterns, our AI model predicts your upcoming harvest volume.</p>
-                <div class="bg-body p-4 rounded-4 shadow-sm text-center border-start border-warning border-4">
+                <div class="bg-body p-4 rounded-4 shadow-sm text-center border-start border-warning border-4 mt-auto">
                     <h6 class="text-muted fw-bold text-uppercase mb-2">Expected Harvest</h6>
                     <h2 class="fw-black text-warning-emphasis mb-0">{{ yield_prediction }}</h2>
                 </div>
@@ -107,15 +107,15 @@
         </div>
     </div>
     
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="card border-0 shadow-sm rounded-4 h-100" style="background: linear-gradient(135deg, #e0e7ff 0%, #eff6ff 100%);">
-            <div class="card-body p-4 p-md-5">
+            <div class="card-body p-4 p-md-5 d-flex flex-column">
                 <div class="d-flex align-items-center mb-3">
                     <span class="fs-2 me-3">🗣️</span>
-                    <h4 class="fw-black text-primary-emphasis mb-0">Review Sentiment AI</h4>
+                    <h4 class="fw-black text-primary-emphasis mb-0">Review Sentiment</h4>
                 </div>
-                <p class="text-muted mb-4">Our NLP model automatically analyzes your product reviews and categorizes the sentiment to help you gauge customer satisfaction instantly.</p>
-                <div class="bg-body p-4 rounded-4 shadow-sm border-start border-primary border-4">
+                <p class="text-muted mb-4">Our NLP model automatically analyzes your product reviews and categorizes the sentiment.</p>
+                <div class="bg-body p-4 rounded-4 shadow-sm border-start border-primary border-4 mt-auto">
                     <div class="d-flex justify-content-between mb-1">
                         <span class="fw-bold text-success small text-uppercase">Positive</span>
                         <span class="fw-bold small">{{ sentiment_data.positive }}%</span>
@@ -138,6 +138,41 @@
                     </div>
                     <div class="progress" style="height: 10px;">
                         <div class="progress-bar bg-danger" style="width: {{ sentiment_data.negative }}%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm rounded-4 h-100" style="background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);">
+            <div class="card-body p-4 p-md-5 d-flex flex-column">
+                <div class="d-flex align-items-center mb-3">
+                    <span class="fs-2 me-3">☁️</span>
+                    <h4 class="fw-black text-info-emphasis mb-0">AI Weather Forecast</h4>
+                </div>
+                <p class="text-muted mb-4">Predicted weather for your area using our trained model based on authentic historical patterns.</p>
+                <div class="bg-body p-4 rounded-4 shadow-sm border-start border-info border-4 mt-auto">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="d-flex align-items-center">
+                            <span class="fs-4 me-2">🌡️</span>
+                            <span class="fw-bold text-muted text-uppercase small">Temp</span>
+                        </div>
+                        <h4 class="fw-black text-body mb-0">{{ weather.temperature }}°C</h4>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="d-flex align-items-center">
+                            <span class="fs-4 me-2">💧</span>
+                            <span class="fw-bold text-muted text-uppercase small">Humidity</span>
+                        </div>
+                        <h4 class="fw-black text-body mb-0">{{ weather.humidity }}%</h4>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            <span class="fs-4 me-2">🌧️</span>
+                            <span class="fw-bold text-muted text-uppercase small">Rainfall</span>
+                        </div>
+                        <h4 class="fw-black text-body mb-0">{{ weather.rainfall }}mm</h4>
                     </div>
                 </div>
             </div>

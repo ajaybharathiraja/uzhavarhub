@@ -7,7 +7,8 @@ from ai_services.analyzer import (
     get_market_insights, 
     predict_crop_yield, 
     analyze_reviews_sentiment,
-    predict_optimal_price
+    predict_optimal_price,
+    get_weather_forecast
 )
 from .forms import ProductForm
 
@@ -35,12 +36,17 @@ def dashboard(request):
         comments = ["Great quality", "Okay but price is high", "Fresh and good", "Excellent"]
     sentiment_data = analyze_reviews_sentiment(comments)
     
+    # 3. AI Weather Forecast
+    from django.utils import timezone
+    weather = get_weather_forecast(timezone.now())
+    
     return render(request, 'farmer/dashboard.html', {
         'products_count': products_count,
         'insights': insights,
         'yield_prediction': f"{expected_yield} Tons",
         'sentiment_data': sentiment_data,
-        'farm_size': farm_size_acres
+        'farm_size': farm_size_acres,
+        'weather': weather
     })
 
 @login_required

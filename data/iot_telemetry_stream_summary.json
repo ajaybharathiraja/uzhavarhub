@@ -1,0 +1,79 @@
+{
+  "total_readings": 672,
+  "time_span": "2026-06-01T06:00:00 to 2026-06-08T05:45:00",
+  "device_id": "UH-EDGE-001",
+  "sensors": {
+    "temperature": {
+      "mean": 32.71,
+      "std": 3.54,
+      "min": 26.67,
+      "max": 39.47,
+      "fault_rate_pct": 0.15,
+      "degraded_rate_pct": 8.48,
+      "total_valid_readings": 671
+    },
+    "humidity": {
+      "mean": 55.37,
+      "std": 6.21,
+      "min": 41.79,
+      "max": 70.43,
+      "fault_rate_pct": 0.0,
+      "degraded_rate_pct": 11.9,
+      "total_valid_readings": 672
+    },
+    "rainfall": {
+      "mean": 9.06,
+      "std": 1.26,
+      "min": 6.11,
+      "max": 15.94,
+      "fault_rate_pct": 0.0,
+      "degraded_rate_pct": 5.65,
+      "total_valid_readings": 672
+    },
+    "nitrogen": {
+      "mean": 89.0,
+      "std": 4.62,
+      "min": 74.94,
+      "max": 103.8,
+      "fault_rate_pct": 0.15,
+      "degraded_rate_pct": 4.91,
+      "total_valid_readings": 671
+    },
+    "phosphorus": {
+      "mean": 44.55,
+      "std": 2.22,
+      "min": 37.66,
+      "max": 50.49,
+      "fault_rate_pct": 0.15,
+      "degraded_rate_pct": 3.72,
+      "total_valid_readings": 671
+    },
+    "potassium": {
+      "mean": 104.17,
+      "std": 5.19,
+      "min": 87.58,
+      "max": 118.79,
+      "fault_rate_pct": 0.15,
+      "degraded_rate_pct": 4.61,
+      "total_valid_readings": 671
+    },
+    "ph": {
+      "mean": 6.64,
+      "std": 0.1,
+      "min": 6.35,
+      "max": 7.07,
+      "fault_rate_pct": 0.15,
+      "degraded_rate_pct": 3.42,
+      "total_valid_readings": 671
+    },
+    "soil_moisture": {
+      "mean": 42.92,
+      "std": 4.65,
+      "min": 30.13,
+      "max": 55.17,
+      "fault_rate_pct": 0.15,
+      "degraded_rate_pct": 5.8,
+      "total_valid_readings": 671
+    }
+  }
+}

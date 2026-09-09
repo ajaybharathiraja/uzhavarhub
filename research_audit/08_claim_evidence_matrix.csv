@@ -1,0 +1,5 @@
+Claim,Source,Dataset,Model,Experiment,Metric,Actual Result,Real/Synthetic,Reproducible,Statistically Supported,Q1 Risk Level
+Crop Rec 97.86%,Manuscript,processed/crop,RF,5-fold CV,Accuracy,98.04%,Synthetic Noise,Yes,Yes,High (Simulated)
+Demand R2 0.088,Manuscript,processed/demand,RF,KFold,R2,0.088,Real,Yes,Yes,Critical (Temporal Leakage)
+Pricing Ablation,Manuscript,ecommerce,RF,KFold,R2,-0.25,Synthetic Target,Yes,Yes,Critical (Fabricated)
+Yield Prediction,Manuscript,synthetic,RF,KFold,RMSE,6.04,Synthetic,Yes,Yes,Critical (Fabricated)

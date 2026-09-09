@@ -1,0 +1,12 @@
+{
+    "Status": "SIMULATION ONLY",
+    "Reason": "Lack of accessible farm-level historical yield datasets",
+    "Variables_Simulated": [
+        "soil_quality",
+        "rainfall_mm",
+        "fertilizer_kg",
+        "temperature",
+        "humidity"
+    ],
+    "Methodology": "Yield = f(soil, rain, fertilizer, temp, humidity) * area_acres + N(0, 0.5)"
+}

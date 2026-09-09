@@ -1,0 +1,11 @@
+Model,Metric,Value
+Price Prediction,MAE,4.95
+Price Prediction,RMSE,6.181308064456183
+Price Prediction,R2,0.9842264542919121
+Crop Recommendation,Accuracy,0.9786363636363635
+Crop Recommendation,Precision,0.9797543850643498
+Crop Recommendation,Recall,0.9786363636363635
+Crop Recommendation,F1-Score,0.9786138006184171
+Demand Forecasting,MAE,34.92318886549092
+Demand Forecasting,RMSE,44.835526507493306
+Demand Forecasting,MAPE,44.316225247904995

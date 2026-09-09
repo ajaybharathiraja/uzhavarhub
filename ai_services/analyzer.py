@@ -126,6 +126,22 @@ def load_model(filename):
         return joblib.load(model_path)
     return None
 
+def get_weather_forecast(date_obj):
+    model = load_model('weather_model.pkl')
+    if model:
+        day_of_year = date_obj.timetuple().tm_yday
+        month = date_obj.month
+        try:
+            pred = model.predict([[day_of_year, month]])
+            return {
+                'temperature': round(pred[0][0], 1),
+                'humidity': round(pred[0][1], 1),
+                'rainfall': round(pred[0][2], 1)
+            }
+        except Exception:
+            pass
+    return {'temperature': 25.0, 'humidity': 60.0, 'rainfall': 5.0}
+
 def predict_optimal_price(base_price, competitor_price, shelf_life, seasonality_index=1.0):
     # This was the old signature. We now use the real pricing model inside the integrated strategy.
     return round(base_price * 1.1, 2)
@@ -158,13 +174,13 @@ def get_integrated_market_strategy(n, p, k, temperature, humidity, ph, rainfall,
         except Exception:
             pass
             
-    # 3. Dynamic Pricing
+    # 3. Dynamic Pricing (now uses weather)
     pricing_model = load_model('pricing_model.pkl')
     suggested_price = 20.0 # fallback
     if pricing_model:
         try:
-            # feature_cols = ['day_of_year', 'month', 'is_weekend', 'quantity', 'Demand']
-            pred_price = pricing_model.predict([[day_of_year, month, is_weekend, 50, forecasted_demand]])
+            # feature_cols = ['day_of_year', 'month', 'is_weekend', 'quantity', 'Demand', 'temperature', 'humidity', 'rainfall']
+            pred_price = pricing_model.predict([[day_of_year, month, is_weekend, 50, forecasted_demand, temperature, humidity, rainfall]])
             suggested_price = max(0, round(pred_price[0], 2))
         except Exception:
             pass

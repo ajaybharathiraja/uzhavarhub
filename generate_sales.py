@@ -1,8 +1,9 @@
 import os
 import django
 import random
-from datetime import timedelta
+import pandas as pd
 from django.utils import timezone
+from datetime import datetime
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'uzhavarhub.settings')
 django.setup()
@@ -14,10 +15,9 @@ from accounts.models import CustomerProfile
 
 User = get_user_model()
 
-def generate_mock_sales():
-    print("Generating mock sales data...")
-    # Create a dummy customer
-    customer, _ = User.objects.get_or_create(username='dummy_customer', defaults={
+def generate_real_sales():
+    print("Generating sales from real dataset...")
+    customer, _ = User.objects.get_or_create(username='dataset_customer', defaults={
         'email': 'customer@example.com',
         'role': 'CUSTOMER'
     })
@@ -28,44 +28,39 @@ def generate_mock_sales():
         print("No products found! Run populate_db.py first.")
         return
 
-    now = timezone.now()
+    # Load real ecommerce dataset
+    df = pd.read_csv('data/processed/ecommerce_sales.csv')
+    df['order_date'] = pd.to_datetime(df['order_date'], errors='coerce')
+    df = df.dropna(subset=['order_date']).head(500) # Load 500 real transactions
     
-    # Generate 500 dummy orders over the last 90 days
-    for _ in range(500):
-        # Random date in last 90 days
-        days_ago = random.randint(0, 90)
-        order_date = now - timedelta(days=days_ago, hours=random.randint(0,23))
+    for _, row in df.iterrows():
+        order_date = row['order_date']
+        # Convert to timezone aware datetime
+        order_date = timezone.make_aware(order_date) if timezone.is_naive(order_date) else order_date
         
         order = Order.objects.create(
             customer=customer,
             status='COMPLETED'
         )
-        # Override auto_now_add for mock data
         Order.objects.filter(id=order.id).update(created_at=order_date)
         
-        # Add 1 to 3 items per order
-        total_amount = 0
-        for _ in range(random.randint(1, 3)):
-            product = random.choice(products)
-            # Make Alphonso Mangoes and Tomatoes sell faster by increasing their random weight/quantity
-            qty = random.randint(1, 5)
-            if 'Tomato' in product.name or 'Mango' in product.name:
-                qty = random.randint(3, 10)
-                
-            price = product.price
-            total_amount += (price * qty)
-            
-            OrderItem.objects.create(
-                order=order,
-                product=product,
-                farmer=product.farmer.user,
-                quantity=qty,
-                price_at_purchase=price
-            )
+        product = random.choice(products)
+        qty = int(row['quantity']) if pd.notna(row['quantity']) else random.randint(1, 5)
+        price = float(row['unit_price']) if pd.notna(row['unit_price']) else product.price
+        
+        total_amount = price * qty
+        
+        OrderItem.objects.create(
+            order=order,
+            product=product,
+            farmer=product.farmer.user,
+            quantity=qty,
+            price_at_purchase=price
+        )
         
         Order.objects.filter(id=order.id).update(total_amount=total_amount)
 
-    print("Successfully generated 500 mock orders!")
+    print(f"Successfully generated {len(df)} orders from real dataset!")
 
 if __name__ == '__main__':
-    generate_mock_sales()
+    generate_real_sales()

@@ -1,0 +1,116 @@
+{
+    "Baseline": [
+        {
+            "crop": "Rice",
+            "score": 0.435,
+            "metrics": {
+                "agronomic_suitability": 0.9,
+                "expected_profit": 0.7,
+                "expected_demand": 0.8,
+                "climate_risk": 0.6,
+                "water_requirement": 0.9,
+                "environmental_impact": 0.5
+            }
+        },
+        {
+            "crop": "Tomato",
+            "score": 0.43499999999999994,
+            "metrics": {
+                "agronomic_suitability": 0.7,
+                "expected_profit": 0.9,
+                "expected_demand": 0.9,
+                "climate_risk": 0.8,
+                "water_requirement": 0.6,
+                "environmental_impact": 0.6
+            }
+        },
+        {
+            "crop": "Millet",
+            "score": 0.4149999999999999,
+            "metrics": {
+                "agronomic_suitability": 0.8,
+                "expected_profit": 0.5,
+                "expected_demand": 0.4,
+                "climate_risk": 0.2,
+                "water_requirement": 0.2,
+                "environmental_impact": 0.2
+            }
+        }
+    ],
+    "Drought": [
+        {
+            "crop": "Millet",
+            "score": 0.235,
+            "metrics": {
+                "agronomic_suitability": 0.8,
+                "expected_profit": 0.5,
+                "expected_demand": 0.4,
+                "climate_risk": 0.2,
+                "water_requirement": 0.2,
+                "environmental_impact": 0.2
+            }
+        },
+        {
+            "crop": "Tomato",
+            "score": 0.15,
+            "metrics": {
+                "agronomic_suitability": 0.7,
+                "expected_profit": 0.9,
+                "expected_demand": 0.9,
+                "climate_risk": 0.8,
+                "water_requirement": 0.6,
+                "environmental_impact": 0.6
+            }
+        },
+        {
+            "crop": "Rice",
+            "score": 0.029999999999999936,
+            "metrics": {
+                "agronomic_suitability": 0.9,
+                "expected_profit": 0.7,
+                "expected_demand": 0.8,
+                "climate_risk": 0.6,
+                "water_requirement": 0.9,
+                "environmental_impact": 0.5
+            }
+        }
+    ],
+    "Market_Boom": [
+        {
+            "crop": "Tomato",
+            "score": 0.565,
+            "metrics": {
+                "agronomic_suitability": 0.7,
+                "expected_profit": 0.9,
+                "expected_demand": 0.9,
+                "climate_risk": 0.8,
+                "water_requirement": 0.6,
+                "environmental_impact": 0.6
+            }
+        },
+        {
+            "crop": "Rice",
+            "score": 0.48,
+            "metrics": {
+                "agronomic_suitability": 0.9,
+                "expected_profit": 0.7,
+                "expected_demand": 0.8,
+                "climate_risk": 0.6,
+                "water_requirement": 0.9,
+                "environmental_impact": 0.5
+            }
+        },
+        {
+            "crop": "Millet",
+            "score": 0.38999999999999996,
+            "metrics": {
+                "agronomic_suitability": 0.8,
+                "expected_profit": 0.5,
+                "expected_demand": 0.4,
+                "climate_risk": 0.2,
+                "water_requirement": 0.2,
+                "environmental_impact": 0.2
+            }
+        }
+    ]
+}

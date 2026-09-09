@@ -1,0 +1,12 @@
+Task_ID,Description,Milestone,Assignee,Status,Hours_Logged
+TASK-01,Initialize Django project & DB schema,Milestone 1,Ajay,Completed,20
+TASK-02,Build authentication & farmer profiles,Milestone 1,Ajay,Completed,30
+TASK-03,Train Crop Recommendation Random Forest model,Milestone 2,Ajay,Completed,40
+TASK-04,Train Demand Forecasting XGBoost model,Milestone 2,Ajay,Completed,45
+TASK-05,Implement Weather-Coupled Dynamic Pricing,Milestone 2,Ajay,Completed,35
+TASK-06,Develop Farmer Dashboard UI,Milestone 3,Ajay,Completed,40
+TASK-07,Develop Consumer Marketplace UI,Milestone 3,Ajay,Completed,35
+TASK-08,Conduct SUS Usability Study with 15 users,Milestone 4,Ajay,Completed,30
+TASK-09,Run Monte Carlo ROI Simulation,Milestone 4,Ajay,Completed,25
+TASK-10,Finalize Q1 Manuscript for Submission,Milestone 4,Ajay,In Progress,50
+TASK-11,Submit to Computers and Electronics in Agriculture,Milestone 4,Ajay,Not Started,0

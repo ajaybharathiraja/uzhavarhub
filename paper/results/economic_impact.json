@@ -1,0 +1,31 @@
+{
+    "Farmers_Simulated": 500,
+    "Base_Scenario": {
+        "Mean_Profit_Traditional": 107173.2349220444,
+        "Mean_Profit_UzhavarHub": 195073.29986651105,
+        "Profit_Increase_Percentage": 82.01680672268907
+    },
+    "Key_Drivers": [
+        "Elimination of 30% middleman cut (replaced by 5% platform fee)",
+        "Spoilage reduction from 15% to 5% via demand forecasting",
+        "20% unit price increase via direct-to-consumer dynamic pricing"
+    ],
+    "Sensitivity_Analysis": {
+        "Middleman_Cut": {
+            "-50% (15% cut)": 49.896193771626265,
+            "+50% (45% cut)": 131.65775401069516
+        },
+        "Spoilage_Reduction": {
+            "-50% Effect (10% Uzh Spoilage)": 72.43697478991601,
+            "+50% Effect (0% Uzh Spoilage)": 91.59663865546221
+        },
+        "Price_Uplift": {
+            "-50% (10% uplift)": 66.84873949579831,
+            "+50% (30% uplift)": 97.18487394957985
+        },
+        "Combined_Extremes": {
+            "Pessimistic (-50% all)": 30.173010380622834,
+            "Optimistic (+50% all)": 164.17112299465242
+        }
+    }
+}

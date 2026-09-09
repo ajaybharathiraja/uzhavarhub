@@ -1,18 +1,5 @@
 {
     "Crop_Recommendation": {
-        "RF_vs_LR": {
-            "p_value": 0.001212138769500437,
-            "cohens_d": 3.661542919552392
-        },
-        "RF_vs_KNN": {
-            "p_value": 0.03747359769163989,
-            "cohens_d": 1.3707293980099822
-        }
-    },
-    "Demand_Forecasting": {
-        "LR_vs_Naive_RMSE": {
-            "p_value": 6.809842778428369e-06,
-            "cohens_d": 13.677170029844856
-        }
+        "RF_vs_LR_pvalue": 0.001212138769500437
     }
 }

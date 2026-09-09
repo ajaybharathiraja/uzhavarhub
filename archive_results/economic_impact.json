@@ -1,0 +1,11 @@
+{
+    "Farmers_Simulated": 500,
+    "Mean_Profit_Traditional": 107173.2349220444,
+    "Mean_Profit_UzhavarHub": 195073.29986651105,
+    "Profit_Increase_Percentage": 82.01680672268907,
+    "Key_Drivers": [
+        "Elimination of 30% middleman cut (replaced by 5% platform fee)",
+        "Spoilage reduction from 15% to 5% via demand forecasting",
+        "20% unit price increase via direct-to-consumer dynamic pricing"
+    ]
+}

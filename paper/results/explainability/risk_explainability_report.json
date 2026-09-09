@@ -1,0 +1,24 @@
+{
+    "Feature_Importance": {
+        "N": 0.09970404831768637,
+        "P": 0.1470628682188921,
+        "K": 0.17996010868047763,
+        "temperature": 0.06958287175541145,
+        "humidity": 0.21886645568209714,
+        "ph": 0.05365135541867903,
+        "rainfall": 0.23117229192675637
+    },
+    "Counterfactual": {
+        "Base_Prediction": "rice",
+        "Counterfactual_Prediction": "rice",
+        "Intervention": "Reduced rainfall by 30%"
+    },
+    "Uncertainty_Estimation": {
+        "Demand": {
+            "Sample_Mean_Prediction": 105.3,
+            "Sample_Lower_95PI": 61.451597702994924,
+            "Sample_Upper_95PI": 149.14840229700508,
+            "Risk_Interval_Width": 87.69680459401016
+        }
+    }
+}

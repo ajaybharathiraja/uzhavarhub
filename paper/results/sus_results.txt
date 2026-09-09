@@ -1,0 +1,4 @@
+Expanded SUS/TAM Analysis complete (N=34).
+Overall SUS: Mean=74.41, SD=9.65
+PU: Mean=75.59, r=0.48 (p=0.0043)
+PEOU: Mean=73.24, r=0.11 (p=0.5375)

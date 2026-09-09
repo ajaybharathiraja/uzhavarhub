@@ -1,0 +1,18 @@
+{
+    "Crop_Recommendation": {
+        "Holdout_Accuracy": 0.9954545454545455,
+        "Holdout_Precision": 0.9956709956709957,
+        "Holdout_Recall": 0.9954545454545454,
+        "Holdout_F1": 0.9954517027687758,
+        "CV_RF_Acc_Mean": 0.99375,
+        "CV_LR_Acc_Mean": 0.96875
+    },
+    "Demand_Forecasting": {
+        "TimeSeries_LR_RMSE_Mean": 46.30063924211596,
+        "TimeSeries_Naive_RMSE_Mean": 47.41011386175022
+    },
+    "Pricing_Ablation": {
+        "R2_Without_Weather_Mean": -3.9980456230559027,
+        "R2_With_Weather_Mean": -0.2262056270367081
+    }
+}

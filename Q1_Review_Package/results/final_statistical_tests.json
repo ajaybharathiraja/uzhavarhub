@@ -1,0 +1,30 @@
+{
+    "Crop_Recommendation": {
+        "RF_vs_LR": {
+            "p_value": 0.009799447747637708,
+            "cohens_d": 2.071071504268385
+        },
+        "RF_vs_KNN": {
+            "p_value": 0.04440850222130651,
+            "cohens_d": 1.2939932784412636
+        }
+    },
+    "Demand_Forecasting": {
+        "LR_vs_Naive_RMSE": {
+            "p_value": 1.7410344743167665e-05,
+            "cohens_d": 10.804756621733077
+        }
+    },
+    "Dynamic_Pricing_Ablation": {
+        "RMSE_With_vs_Without_Demand": {
+            "p_value": 0.007023921217537918,
+            "cohens_d": 2.277004501229725
+        }
+    },
+    "Yield_Prediction": {
+        "RF_vs_Naive_RMSE": {
+            "p_value": 8.233258034489278e-08,
+            "cohens_d": 41.31189102278502
+        }
+    }
+}

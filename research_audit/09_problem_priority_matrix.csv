@@ -1,0 +1,6 @@
+Problem,Category,Priority,Description,Action
+Temporal Leakage,Methodology,P0,Demand and Pricing use shuffled KFold,Replace with TimeSeriesSplit
+Synthetic Pricing,Data,P0,Dynamic pricing target is mathematically generated,Use real historical prices or declare simulation
+Synthetic Yield,Data,P0,Yield data is np.random generated,Use FAO/real data or remove claim
+No Uncertainty,Methodology,P1,Models give point predictions without risk,Add prediction intervals
+No Multi-Objective,Architecture,P0,System lacks risk-aware optimization,Implement multi-objective optimizer
