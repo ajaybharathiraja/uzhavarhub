@@ -1,11 +1,11 @@
 {
     "Validation_Method": "TimeSeriesSplit",
-    "GB_RMSE_Mean": 35.97781967989413,
-    "GB_MAE_Mean": 27.52520480621886,
-    "GB_R2_Mean": 0.39114655322198155,
+    "GB_RMSE_Mean": 35.97778945199191,
+    "GB_MAE_Mean": 27.52539126272611,
+    "GB_R2_Mean": 0.39114742341861525,
     "LR_RMSE_Mean": 37.092615936476946,
     "LR_MAE_Mean": 28.613339498420565,
     "LR_R2_Mean": 0.3517082345223327,
     "Naive_Baseline_RMSE_Mean": 47.40777461567173,
-    "GB_vs_Naive_pvalue": 0.002627724110076855
+    "GB_vs_Naive_pvalue": 0.002627765644356195
 }

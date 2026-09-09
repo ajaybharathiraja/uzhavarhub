@@ -1,7 +1,7 @@
 {
     "Crop_Recommendation": {
         "RF_Accuracy_Mean": 0.9954545454545455,
-        "Baseline_LR_Accuracy_Mean": 0.9709090909090909,
+        "Baseline_LR_Accuracy_Mean": 0.9722727272727273,
         "RF_Accuracy_Std": 0.0035934973411004103,
         "Simulated_Geographic_Holdout": true
     }

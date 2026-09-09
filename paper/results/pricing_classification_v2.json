@@ -1,7 +1,7 @@
 {
     "Validation_Method": "TimeSeriesSplit",
-    "GB_Accuracy_Mean": 0.33349339735894357,
-    "GB_Macro_F1_Mean": 0.33192803805957405,
+    "GB_Accuracy_Mean": 0.3337334933973589,
+    "GB_Macro_F1_Mean": 0.33214262024840524,
     "Dummy_Accuracy_Mean": 0.3495798319327731,
     "Confusion_Matrix": [
         [
@@ -20,5 +20,5 @@
             97
         ]
     ],
-    "ChiSquare_pvalue": 0.12728787796815869
+    "ChiSquare_pvalue": 0.13318666009552266
 }
