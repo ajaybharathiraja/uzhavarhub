@@ -4,3 +4,5 @@ __pycache__/
 db.sqlite3
 .env
 .gemini/
+data/raw/Tamilnadu_and_Puducherry_weather_2022_cleaned.csv
+Large_Test_File.zip
