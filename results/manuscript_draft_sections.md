@@ -1,5 +1,16 @@
 # Manuscript Draft Sections
 
+## Title
+Empowering Agri-Entrepreneurs: An AI-Driven Ecosystem Approach to Supply Chain Optimization in Emerging Markets
+
+## Abstract
+While artificial intelligence holds transformative potential for agriculture in emerging markets, its adoption is often hindered by systemic barriers and a lack of integrated, entrepreneur-focused solutions. This study presents UzhavarHub, an AI-driven agricultural marketplace designed through an entrepreneurial ecosystem lens. By integrating crop recommendation, demand forecasting, and dynamic pricing models, we provide a holistic digital infrastructure that empowers smallholder farmers to transition into agritech entrepreneurs. Our rigorous quantitative evaluation demonstrates high predictive accuracy across interconnected models, while our primary-data usability assessment (using the Technology Acceptance Model) confirms strong perceived usefulness and ease of use. This research bridges the gap between theoretical AI frameworks and operational reality, offering a blueprint for scalable, tech-enabled agricultural entrepreneurship.
+
+## Contributions
+1. **Entrepreneurial Framing of Agritech:** We extend existing literature by conceptualizing AI-driven agricultural platforms not merely as tools for efficiency, but as catalysts for rural entrepreneurship and economic empowerment.
+2. **Empirical Validation of Interconnected AI:** We provide robust quantitative evidence of how integrating demand forecasting with dynamic pricing significantly improves predictive performance in real-world agricultural supply chains.
+3. **Primary-Data Usability Assessment:** By evaluating user acceptance through the TAM framework, we offer empirical insights into the factors driving the adoption of complex AI systems among agricultural stakeholders in emerging markets.
+
 ## Introduction / Related Work
 While significant research has explored the theoretical implications of AI in South Asian agriculture, empirical validation remains critically scarce. For instance, Huda et al. (2026) provided a comprehensive qualitative assessment of AI's potential across 30+ agribusiness firms, but explicitly noted the lack of primary, quantitative validation as a limitation. This paper directly addresses that research gap by presenting UzhavarHub—a fully deployed, AI-driven agricultural marketplace. Unlike previous secondary-data studies, we provide rigorous primary-data evaluation by quantifying actual model performance (via MAE, RMSE, and F1 metrics) and empirical usability outcomes. By moving beyond conceptual frameworks to operational reality, we offer robust quantitative evidence of how interconnected AI models directly impact supply-chain efficiency and farmer adoption in emerging economies.
 
